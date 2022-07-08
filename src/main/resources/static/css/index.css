@@ -1,0 +1,37 @@
+.explore-text {
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    padding: 30px;
+    color: #494545;
+}
+
+#explore {
+    padding: 100px;
+}
+
+.explore-img {
+    width: auto;
+    max-width: content-box;
+}
+
+.btn-explore {
+    background-color: #1363DF;
+    color: white;
+}
+
+.btn-explore:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+
+.container-fluid {
+    background-color: #1363DF;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.footer-text {
+    font-family: 'Ubuntu', sans-serif;
+}
