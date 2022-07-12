@@ -3,12 +3,8 @@
     color: #fff;
     text-align: left;
     position: relative;
+    padding: 0.5rem 1.5rem;
 }
-
-#title .container-fluid {
-    padding: 1.5rem 3.5rem;
-}
-
 .navbar-brand {
     font-family: 'Montserrat-Bold', sans-serif;
     font-size: 2.5rem;
@@ -20,11 +16,11 @@
     font-weight: 500;
 }
 
-.btn-search {
-    background-color: #fff;
-}
+/*.btn-search {*/
+/*    background-color: #fff;*/
+/*}*/
 
-.btn-search:hover {
-    background-color: #fff;
-    color: black;
-}
+/*.btn-search:hover {*/
+/*    background-color: #fff;*/
+/*    color: black;*/
+/*}*/

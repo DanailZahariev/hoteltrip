@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title>HotelTrip</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/register.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,13 +19,56 @@
           rel="stylesheet">
 </head>
 <body>
-<div th:fragment="footer" class="container-fluid">
-    <footer id="footer">
+<header th:fragment="navbar" id="title">
+    <div class="container-fluid">
+        <!-- Nav Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="/">HotelTrip</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nabarCollapse"
+                    aria-controls="nabarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="container-fluid">
-            <p class="footer-text">© Copyright TripHotel</p>
-        </div>
-    </footer>
-</div>
+            <div class="collapse navbar-collapse" id="nabarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <th:block sec:authorize="!isAuthenticated()">
+                        <li class="nav-item">
+                            <a class="nav-link active nav-text btn-link"
+                               th:href="@{/users/login}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active nav-text btn-link"
+                               th:href="@{/users/register}">Register</a>
+                        </li>
+                    </th:block>
+
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <div class="my-2 my-lg-0 px-3">
+                            <form th:action="@{/users/logout}" th:method="post">
+                                <input class="btn btn-link nav-link" type="submit" value="Logout">
+                            </form>
+                        </div>
+                    </li>
+
+
+                    <!--                    <li class="nav-link" sec:authorize="isAuthenticated()">-->
+                    <!--                        <a class="nav-link active nav-text"-->
+                    <!--                           th:href="/users/logout">Logout</a>-->
+                    <!--                    </li>-->
+
+                </ul>
+                <!--                <form class="d-flex">-->
+                <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+                <!--                    <button class="btn btn-outline-primary btn-search" type="submit">Search</button>-->
+                <!--                </form>-->
+            </div>
+        </nav>
+    </div>
+</header>
+<footer th:fragment="footer" class="d-flex flex-column footer">
+    <div class="container-fluid text-center">
+        <p>© Copyright TripHotel</p>
+    </div>
+</footer>
 </body>
 </html>

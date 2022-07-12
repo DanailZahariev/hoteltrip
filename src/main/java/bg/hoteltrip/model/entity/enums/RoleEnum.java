@@ -1,5 +1,5 @@
 package bg.hoteltrip.model.entity.enums;
 
-public enum UserRoleName {
+public enum RoleEnum {
     ADMIN, USER;
 }

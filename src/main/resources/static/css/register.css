@@ -1,0 +1,10 @@
+body {
+    font-family: Ubuntu, sans-serif;
+}
+
+.register-text {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    color: #0d6efd;
+}
