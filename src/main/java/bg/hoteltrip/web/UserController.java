@@ -4,6 +4,7 @@ import bg.hoteltrip.model.binding.UserRegisterBindingModel;
 import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,16 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         return "login";
+    }
+
+
+    @PostMapping("/login-error")
+    public String failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                              String username, RedirectAttributes redirectAttributes) {
+
+        redirectAttributes.addFlashAttribute("bad_credentials", true);
+
+        return "redirect:login";
     }
 
     @GetMapping("/register")

@@ -13,12 +13,15 @@
                   th:method="post"
                   class="container row-cols-xl-1">
                 <!-- Email input -->
+                <p th:if="${bad_credentials}" class="text-danger">
+                    Invalid username or password.
+                </p>
                 <div class="col-auto mb-2">
-                    <label class="form-label m-0" for="username">Email address</label>
+                    <label class="form-label m-0" for="email">Email address</label>
                     <input placeholder="Email"
                            name="username"
                            type="text"
-                           id="username"
+                           id="email"
                            class="form-control"/>
                 </div>
 
