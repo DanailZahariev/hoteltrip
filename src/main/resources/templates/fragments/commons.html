@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/register.css">
+    <link rel="stylesheet" href="/css/userProfile.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,14 +49,12 @@
                                 <input class="btn btn-link nav-link" type="submit" value="Logout">
                             </form>
                         </div>
+                        <div class="my-2 my-lg-0 px-3">
+                            <a sec:authorize="hasAnyRole('USER')" th:text="${session.loggedUserEmail}"
+                               class="btn btn-link nav-link" href="/users/user-profile">PROFILE
+                            </a>
+                        </div>
                     </li>
-
-
-                    <!--                    <li class="nav-link" sec:authorize="isAuthenticated()">-->
-                    <!--                        <a class="nav-link active nav-text"-->
-                    <!--                           th:href="/users/logout">Logout</a>-->
-                    <!--                    </li>-->
-
                 </ul>
                 <!--                <form class="d-flex">-->
                 <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->

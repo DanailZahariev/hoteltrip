@@ -4,6 +4,7 @@ import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.model.service.UserRoleService;
 import bg.hoteltrip.model.service.UserServiceModel;
+import bg.hoteltrip.model.view.UserProfileViewModel;
 import bg.hoteltrip.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +43,7 @@ public class UserService {
 
 
     public boolean findByEmail(String email) {
-        return userRepository.findByEmail(email).isEmpty();
+        return userRepository.findByEmailIgnoreCase(email).isEmpty();
     }
 
     public void registerUser(UserServiceModel registerUser) throws RoleNotFoundException {
@@ -66,5 +67,10 @@ public class UserService {
                         userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    public UserProfileViewModel getProfileViewByEmail(String email) {
+        UserEntity user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+        return modelMapper.map(user, UserProfileViewModel.class);
     }
 }
