@@ -2,12 +2,10 @@ package bg.hoteltrip.web;
 
 import bg.hoteltrip.model.binding.UserRegisterBindingModel;
 import bg.hoteltrip.model.service.UserServiceModel;
-import bg.hoteltrip.model.view.UserProfileViewModel;
 import bg.hoteltrip.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
-import java.security.Principal;
 
 @RequestMapping("/users")
 @Controller
@@ -40,9 +37,10 @@ public class UserController {
 
 
     @PostMapping("/login-error")
-    public String failedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
-                              String username, RedirectAttributes redirectAttributes) {
+    public String onFailedLogin(@ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY)
+                                String username, RedirectAttributes redirectAttributes) {
 
+        redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
         redirectAttributes.addFlashAttribute("bad_credentials", true);
 
         return "redirect:login";
@@ -69,16 +67,6 @@ public class UserController {
         userService.registerUser(newUser);
 
         return "redirect:/";
-    }
-
-
-    @GetMapping("/user-profile")
-    public String profile(Model model, Principal principal) {
-
-        UserProfileViewModel userProfile = userService.getProfileViewByEmail(principal.getName());
-        model.addAttribute("user", userProfile);
-
-        return "user-profile";
     }
 
     @ModelAttribute

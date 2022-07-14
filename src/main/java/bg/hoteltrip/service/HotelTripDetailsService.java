@@ -1,19 +1,15 @@
 package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.UserEntity;
+import bg.hoteltrip.model.entity.UserRoleEntity;
+import bg.hoteltrip.model.user.HotelTripUser;
 import bg.hoteltrip.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-@Service
 public class HotelTripDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -24,23 +20,30 @@ public class HotelTripDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) {
-        UserEntity userEmail = userRepository.findByEmailIgnoreCase(email).orElse(null);
-
-        if (userEmail == null) {
-            throw new UsernameNotFoundException("User with email " + email + " not found");
-        }
-
-        return mapToUserDetails(userEmail);
+        return userRepository.
+                findUserEntitiesByEmail(email).
+                map(this::map).
+                orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
     }
 
-    private UserDetails mapToUserDetails(UserEntity userEmail) {
+    private UserDetails map(UserEntity userEntity) {
 
-        List<GrantedAuthority> authorities =
-                userEmail.getRoles()
-                        .stream()
-                        .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRole().name()))
-                        .collect(Collectors.toList());
+        return new HotelTripUser(
+                userEntity.getPassword(),
+                userEntity.getEmail(),
+                userEntity.getFirstName(),
+                userEntity.getLastName(),
+                userEntity.
+                        getRoles().
+                        stream().
+                        map(this::mapRoles).
+                        toList()
+        );
+    }
 
-        return new User(userEmail.getEmail(), userEmail.getPassword(), authorities);
+    private GrantedAuthority mapRoles(UserRoleEntity userRole) {
+        return new SimpleGrantedAuthority("ROLE_" +
+                userRole.
+                        getRole().name());
     }
 }

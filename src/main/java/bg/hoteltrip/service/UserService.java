@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -42,8 +43,8 @@ public class UserService {
     }
 
 
-    public boolean findByEmail(String email) {
-        return userRepository.findByEmailIgnoreCase(email).isEmpty();
+    public Optional<UserEntity> findByEmail(String email) {
+        return userRepository.findUserEntitiesByEmail(email);
     }
 
     public void registerUser(UserServiceModel registerUser) throws RoleNotFoundException {
@@ -69,8 +70,9 @@ public class UserService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    public UserProfileViewModel getProfileViewByEmail(String email) {
-        UserEntity user = userRepository.findByEmailIgnoreCase(email).orElseThrow();
+    public UserProfileViewModel getUserProfile(String name) {
+        Optional<UserEntity> user = userRepository.findUserEntitiesByEmail(name);
+
         return modelMapper.map(user, UserProfileViewModel.class);
     }
 }

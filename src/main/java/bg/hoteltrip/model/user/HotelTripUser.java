@@ -9,26 +9,25 @@ public class HotelTripUser implements UserDetails {
 
 
     private final String password;
-    private final String email;
+    private final String username;
     private final String firstName;
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
 
     public HotelTripUser(String password,
-                         String email,
+                         String username,
                          String firstName,
                          String lastName,
                          Collection<GrantedAuthority> authorities) {
         this.password = password;
-        this.email = email;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.authorities = authorities;
     }
 
-
-    public String getEmail() {
-        return email;
+    public String fullName() {
+        return firstName + " " + lastName;
     }
 
     public String getFirstName() {
@@ -51,12 +50,12 @@ public class HotelTripUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return username;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
