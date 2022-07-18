@@ -1,6 +1,7 @@
 package bg.hoteltrip.model.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,13 +14,20 @@ public class HotelEntity extends BaseEntity {
     @ManyToOne(optional = false)
     private TownEntity town;
 
-    @ManyToOne(optional = false)
-    private RoomEntity rooms;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String description;
 
+    @ManyToMany
+    private List<RoomEntity> rooms;
+
+    @Column(name = "total_rooms", nullable = false)
+    private Integer totalRooms;
 
     @ManyToOne
     private PictureEntity hotelPictures;
 
     public HotelEntity() {
+        this.totalRooms = 50;
+        this.rooms = new ArrayList<>(totalRooms);
     }
 }

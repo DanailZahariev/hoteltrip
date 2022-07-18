@@ -5,6 +5,7 @@ import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "rooms")
@@ -15,24 +16,10 @@ public class RoomEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoomTypeEnum roomType;
 
-    @ManyToOne(optional = false)
-    private UserEntity guestName;
-
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(name = "start_date", nullable = false)
-    private LocalDate startDate;
-
-    @Column(name = "end_date", nullable = false)
-    private LocalDate endDate;
-
-    @Column(name = "is_reserved", nullable = false)
-    private boolean isReserved;
-
-
     public RoomEntity() {
     }
-
 
 }

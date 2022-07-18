@@ -20,6 +20,7 @@ public class UserEntity extends BaseEntity {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Column(unique = true)
     private List<UserRoleEntity> roles;
 
 
