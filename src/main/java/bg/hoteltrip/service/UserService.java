@@ -1,5 +1,6 @@
 package bg.hoteltrip.service;
 
+import bg.hoteltrip.config.AdminProperties;
 import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.model.service.UserServiceModel;
@@ -27,18 +28,19 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final ModelMapper modelMapper;
     private final UserRoleService userRoleService;
-
+    private final AdminProperties adminProperties;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        UserDetailsService userDetailsService,
                        ModelMapper modelMapper,
-                       UserRoleService userRoleService) {
+                       UserRoleService userRoleService, AdminProperties adminProperties) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.modelMapper = modelMapper;
         this.userRoleService = userRoleService;
+        this.adminProperties = adminProperties;
     }
 
 
@@ -80,9 +82,11 @@ public class UserService {
             return;
         }
         UserEntity admin = new UserEntity();
-        admin.setFirstName("admin").setLastName("admin").setEmail("admin@admin.com")
-                .setPassword(passwordEncoder.encode("123456"))
+        admin.setEmail(adminProperties.getEmail())
+                .setPassword(passwordEncoder.encode(adminProperties.getPassword()))
+                .setFirstName("admin").setLastName("admin")
                 .setRoles(List.of(userRoleService.findByRole(RoleEnum.ADMIN)));
+
         userRepository.save(admin);
     }
 }

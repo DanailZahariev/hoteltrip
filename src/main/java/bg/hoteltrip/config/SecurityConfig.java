@@ -25,7 +25,8 @@ public class SecurityConfig {
         httpSecurity.
                 authorizeRequests().
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                antMatchers("/", "/users/login", "/users/register","/hotels/**").permitAll().
+                antMatchers("/admin/**").hasRole("ADMIN").
+                antMatchers("/", "/users/login", "/users/register", "/hotels/**").permitAll().
                 anyRequest().
                 authenticated().
                 and().
