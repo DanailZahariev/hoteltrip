@@ -74,4 +74,15 @@ public class UserService {
 
         return modelMapper.map(user, UserProfileViewModel.class);
     }
+
+    public void initAdmin() throws RoleNotFoundException {
+        if (userRepository.count() != 0) {
+            return;
+        }
+        UserEntity admin = new UserEntity();
+        admin.setFirstName("admin").setLastName("admin").setEmail("admin@admin.com")
+                .setPassword(passwordEncoder.encode("123456"))
+                .setRoles(List.of(userRoleService.findByRole(RoleEnum.ADMIN)));
+        userRepository.save(admin);
+    }
 }
