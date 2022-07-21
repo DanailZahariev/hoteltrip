@@ -11,3 +11,16 @@ spring:
   sql:
     init:
       mode: never
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      #    CLOUDINARY
+cloudinary:
+  api-key: 719239244197643
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: dio3s4oo1

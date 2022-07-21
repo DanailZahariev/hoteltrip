@@ -1,6 +1,5 @@
 package bg.hoteltrip.config;
 
-import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.repository.UserRepository;
 import bg.hoteltrip.service.HotelTripDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;

@@ -9,18 +9,18 @@ public class HotelTripUser implements UserDetails {
 
 
     private final String password;
-    private final String username;
+    private final String email;
     private final String firstName;
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
 
     public HotelTripUser(String password,
-                         String username,
+                         String email,
                          String firstName,
                          String lastName,
                          Collection<GrantedAuthority> authorities) {
         this.password = password;
-        this.username = username;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.authorities = authorities;
@@ -50,7 +50,11 @@ public class HotelTripUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     @Override
