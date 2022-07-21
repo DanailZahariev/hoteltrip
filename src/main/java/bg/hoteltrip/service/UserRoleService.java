@@ -1,4 +1,4 @@
-package bg.hoteltrip.model.service;
+package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.UserRoleEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
@@ -6,7 +6,6 @@ import bg.hoteltrip.repository.UserRoleRepository;
 import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
-import java.util.Collections;
 
 @Service
 public class UserRoleService {

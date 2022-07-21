@@ -1,34 +1,17 @@
 package bg.hoteltrip.web;
 
-import bg.hoteltrip.model.binding.UserRegisterBindingModel;
-import bg.hoteltrip.model.service.UserServiceModel;
-import bg.hoteltrip.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.management.relation.RoleNotFoundException;
-import javax.validation.Valid;
-
 @RequestMapping("/users")
 @Controller
 public class UserController {
 
-
-    private final UserService userService;
-    private final ModelMapper modelMapper;
-
-    public UserController(UserService userService,
-                          ModelMapper modelMapper) {
-        this.userService = userService;
-        this.modelMapper = modelMapper;
-    }
 
     @GetMapping("/login")
     public String login() {
@@ -44,33 +27,5 @@ public class UserController {
         redirectAttributes.addFlashAttribute("bad_credentials", true);
 
         return "redirect:login";
-    }
-
-    @GetMapping("/register")
-    public String register() {
-        return "register";
-    }
-
-
-    @PostMapping("/register")
-    public String registerUser(@Valid UserRegisterBindingModel userRegisterBindingModel,
-                               BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) throws RoleNotFoundException {
-
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel)
-                    .addFlashAttribute("org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
-            return "redirect:register";
-        }
-
-        UserServiceModel newUser = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
-        userService.registerUser(newUser);
-
-        return "redirect:/";
-    }
-
-    @ModelAttribute
-    public UserRegisterBindingModel userRegisterBindingModel() {
-        return new UserRegisterBindingModel();
     }
 }

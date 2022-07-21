@@ -1,0 +1,15 @@
+.not-found-body {
+    font-family: Montserrat-Bold, sans-serif;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.btn-home {
+    background-color: #1363DF;
+    color: white;
+}
+
+.btn-home:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}

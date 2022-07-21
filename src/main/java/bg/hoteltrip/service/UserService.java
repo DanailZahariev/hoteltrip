@@ -2,7 +2,6 @@ package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
-import bg.hoteltrip.model.service.UserRoleService;
 import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.model.view.UserProfileViewModel;
 import bg.hoteltrip.repository.UserRepository;

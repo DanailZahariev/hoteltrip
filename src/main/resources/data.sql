@@ -18,6 +18,13 @@ VALUES ('Nesebar Sunny Resort',
 On the rooftop, guests can benefit from an outdoor swimming pool and a terrace bar. There is also a restaurant where breakfast, lunch and dinner are available.
 Nesebar Sunny Resort also features a massage center where guests can choose from several therapies and facilities such as sauna and steam room.',
            50, null, 2);
+
+INSERT INTO hotels (hotel_name, description, total_rooms, hotel_pictures_id, town_id)
+VALUES ('Nesebar Chaika Resort',
+        'Rooms at Nesebar Sunny Resort are bright and spacious and they are equipped with cable TV.
+On the rooftop, guests can benefit from an outdoor swimming pool and a terrace bar. There is also a restaurant where breakfast, lunch and dinner are available.
+Nesebar Sunny Resort also features a massage center where guests can choose from several therapies and facilities such as sauna and steam room.',
+        50, null, 2);
 INSERT INTO hotels (hotel_name, description, total_rooms, hotel_pictures_id, town_id)
 VALUES ('GrandHotel Sofia', 'Set a 5-minute walk from the Serdika underground railway station, the 5-star Grand Hotel Sofia is located right in the heart of Sofia, overlooking the City Garden. It offers large rooms, free Wi-Fi and free indoor parking.
 
