@@ -3,6 +3,7 @@ package bg.hoteltrip.model.service;
 public class UserServiceModel {
 
 
+    private String username;
     private String email;
     private String firstName;
     private String lastName;
@@ -42,6 +43,15 @@ public class UserServiceModel {
 
     public UserServiceModel setPassword(String password) {
         this.password = password;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public UserServiceModel setUsername(String username) {
+        this.username = username;
         return this;
     }
 }

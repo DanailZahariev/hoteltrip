@@ -21,7 +21,7 @@ public class HotelTripDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         return userRepository.
-                findUserEntitiesByEmail(email).
+                findUserEntitiesByEmailIgnoreCase(email).
                 map(this::map).
                 orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
     }

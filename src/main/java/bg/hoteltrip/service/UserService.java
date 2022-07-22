@@ -43,11 +43,6 @@ public class UserService {
         this.adminProperties = adminProperties;
     }
 
-
-    public Optional<UserEntity> findByEmail(String email) {
-        return userRepository.findUserEntitiesByEmail(email);
-    }
-
     public void registerUser(UserServiceModel registerUser) throws RoleNotFoundException {
 
         UserEntity newUser = modelMapper.map(registerUser, UserEntity.class);
@@ -72,7 +67,7 @@ public class UserService {
     }
 
     public UserProfileViewModel getUserProfile(String name) {
-        Optional<UserEntity> user = userRepository.findUserEntitiesByEmail(name);
+        Optional<UserEntity> user = userRepository.findUserEntitiesByEmailIgnoreCase(name);
 
         return modelMapper.map(user, UserProfileViewModel.class);
     }
@@ -84,9 +79,17 @@ public class UserService {
         UserEntity admin = new UserEntity();
         admin.setEmail(adminProperties.getEmail())
                 .setPassword(passwordEncoder.encode(adminProperties.getPassword()))
-                .setFirstName("admin").setLastName("admin")
+                .setFirstName("admin").setLastName("admin").setUsername("admin")
                 .setRoles(List.of(userRoleService.findByRole(RoleEnum.ADMIN)));
 
         userRepository.save(admin);
+    }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        return userRepository.findUserEntitiesByEmailIgnoreCase(email);
+    }
+
+    public Optional<UserEntity> findByUsername(String username) {
+        return userRepository.findUserEntitiesByUsernameIgnoreCase(username);
     }
 }

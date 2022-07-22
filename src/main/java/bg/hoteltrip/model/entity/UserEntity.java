@@ -8,8 +8,9 @@ import java.util.List;
 public class UserEntity extends BaseEntity {
 
     @Column(nullable = false, unique = true)
+    private String username;
+    @Column(nullable = false, unique = true)
     private String email;
-
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
@@ -69,6 +70,15 @@ public class UserEntity extends BaseEntity {
 
     public UserEntity setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public UserEntity setUsername(String username) {
+        this.username = username;
         return this;
     }
 }

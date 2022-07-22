@@ -2,6 +2,7 @@ package bg.hoteltrip.model.binding;
 
 import bg.hoteltrip.util.validation.FieldMatch;
 import bg.hoteltrip.util.validation.UniqueEmail;
+import bg.hoteltrip.util.validation.UniqueUsername;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +14,10 @@ import javax.validation.constraints.Size;
         message = "Passwords do not match.")
 public class UserRegisterBindingModel {
 
-
+    @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters!")
+    @UniqueUsername(message = "Username already exist!")
+    @NotBlank(message = "Please, enter you username!")
+    private String username;
     @Email
     @UniqueEmail(message = "Email already exist, please enter a different email.")
     @NotBlank(message = "Please, enter your email!")
@@ -80,6 +84,15 @@ public class UserRegisterBindingModel {
 
     public UserRegisterBindingModel setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+        return this;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public UserRegisterBindingModel setUsername(String username) {
+        this.username = username;
         return this;
     }
 }
