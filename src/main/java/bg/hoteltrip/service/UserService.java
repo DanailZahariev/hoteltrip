@@ -5,6 +5,7 @@ import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.model.view.UserProfileViewModel;
+import bg.hoteltrip.model.view.UserViewModel;
 import bg.hoteltrip.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.management.relation.RoleNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -91,5 +93,17 @@ public class UserService {
 
     public Optional<UserEntity> findByUsername(String username) {
         return userRepository.findUserEntitiesByUsernameIgnoreCase(username);
+    }
+
+    public List<UserViewModel> findAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(user ->
+                        modelMapper.map(user, UserViewModel.class)).
+                collect(Collectors.toList());
+    }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
     }
 }

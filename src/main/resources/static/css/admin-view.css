@@ -1,0 +1,12 @@
+body {
+    font-family: Ubuntu, sans-serif;
+    display: block;
+}
+
+.admin-view {
+    margin: 40px;
+}
+
+.admin-btn {
+    margin: 0 auto 20px auto;
+}

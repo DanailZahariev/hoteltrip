@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+<header th:replace="fragments/commons::navbar"></header>
+<div class="container">
+    <div class="row">
+        <p class="col-sm">ID</p>
+        <p class="col-sm">Username</p>
+        <p class="col-sm">First Name</p>
+        <p class="col-sm">Last Name</p>
+        <p class="col-sm">Email</p>
+    </div>
+</div>
+<form th:action="@{/admin/all-users}"
+      th:method="post"
+      th:each="u : ${allUsers}" th:object="${u}">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <p th:text="*{id}"></p>
+            </div>
+            <div class="col-sm">
+                <p th:text="*{username}"></p>
+            </div>
+            <div class="col-sm">
+                <p th:text="*{firstName}"></p>
+            </div>
+            <div class="col-sm">
+                <p th:text="*{lastName}"></p>
+            </div>
+            <div class="col-sm">
+                <p th:text="*{email}"></p>
+            </div>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-primary" type="submit"
+               th:href="@{/admin/all-users/{id}/(id=*{id})}">Delete
+            </a>
+        </div>
+    </div>
+</form>
+
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>
