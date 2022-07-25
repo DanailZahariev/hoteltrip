@@ -96,7 +96,7 @@ public class UserService {
     }
 
     public List<UserViewModel> findAllUsers() {
-        return userRepository.findAll()
+        return userRepository.findAllUsersByRoleUser()
                 .stream()
                 .map(user ->
                         modelMapper.map(user, UserViewModel.class)).

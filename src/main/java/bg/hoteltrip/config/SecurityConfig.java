@@ -1,5 +1,6 @@
 package bg.hoteltrip.config;
 
+import bg.hoteltrip.handlers.CustomAccessDeniedHandler;
 import bg.hoteltrip.repository.UserRepository;
 import bg.hoteltrip.service.HotelTripDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -25,10 +27,10 @@ public class SecurityConfig {
         httpSecurity.
                 authorizeRequests().
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                antMatchers("/admin/**").hasRole("ADMIN").
                 antMatchers("/users/login", "/users/register").anonymous().
-                antMatchers("profile/**").authenticated().
                 antMatchers("/hotels/**", "/").permitAll().
+                antMatchers("profile/**").hasRole("USER").
+                antMatchers("/admin/**").hasRole("ADMIN").
                 anyRequest().
                 authenticated().
                 and().
@@ -51,5 +53,10 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new HotelTripDetailsService(userRepository);
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 }
