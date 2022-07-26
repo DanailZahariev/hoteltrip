@@ -11,9 +11,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<UserEntity> findUserEntitiesByEmailIgnoreCase(String email);
-
-    Optional<UserEntity> findUserEntitiesByUsernameIgnoreCase(String username);
+    Optional<UserEntity> findUserEntityByEmail(String email);
 
     @Query("select u from UserEntity u join u.roles r " +
             "where r.role = bg.hoteltrip.model.entity.enums.RoleEnum.USER")

@@ -2,7 +2,7 @@ package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.UserRoleEntity;
-import bg.hoteltrip.model.user.HotelTripUser;
+import bg.hoteltrip.model.user.HotelTripUserDetails;
 import bg.hoteltrip.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,14 +21,14 @@ public class HotelTripDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         return userRepository.
-                findUserEntitiesByEmailIgnoreCase(email).
+                findUserEntityByEmail(email).
                 map(this::map).
                 orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
     }
 
     private UserDetails map(UserEntity userEntity) {
-
-        return new HotelTripUser(
+        return new HotelTripUserDetails(
+                userEntity.getId(),
                 userEntity.getPassword(),
                 userEntity.getEmail(),
                 userEntity.getFirstName(),

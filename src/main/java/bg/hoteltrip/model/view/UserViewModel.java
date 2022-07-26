@@ -3,16 +3,11 @@ package bg.hoteltrip.model.view;
 public class UserViewModel {
 
     private Long id;
-    private String username;
     private String email;
     private String firstName;
     private String lastName;
 
     public UserViewModel() {
-    }
-
-    public String getUsername() {
-        return username;
     }
 
     public Long getId() {
@@ -21,11 +16,6 @@ public class UserViewModel {
 
     public UserViewModel setId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public UserViewModel setUsername(String username) {
-        this.username = username;
         return this;
     }
 

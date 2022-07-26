@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driverClassName: org.hsqldb.jdbc.JDBCDriver
+    url: jdbc:hsqldb:mem:testdb;sql.syntax_mys=true
+  sql:
+    init:
+      mode: never
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.HSQLDialect
+
+  #Cloudinary Properties
+cloudinary:
+  api-key: 719239244197643
+  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: dio3s4oo1

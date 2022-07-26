@@ -1,7 +1,3 @@
--- INSERT INTO roles (role)
--- values ('ADMIN'),
---        ('USER');
-
 INSERT INTO towns (town_name)
 VALUES ('Sofia'),
        ('Nesebar'),

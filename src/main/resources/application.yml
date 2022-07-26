@@ -24,6 +24,3 @@ cloudinary:
   api-key: 719239244197643
   api-secret: ${CLOUDINARY_API_SECRET}
   cloud-name: dio3s4oo1
-admin:
-  email: ${EMAIL}
-  password: ${ADMIN_PASSWORD}

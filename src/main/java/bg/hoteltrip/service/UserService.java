@@ -1,6 +1,5 @@
 package bg.hoteltrip.service;
 
-import bg.hoteltrip.config.AdminProperties;
 import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.model.service.UserServiceModel;
@@ -30,19 +29,17 @@ public class UserService {
     private final UserDetailsService userDetailsService;
     private final ModelMapper modelMapper;
     private final UserRoleService userRoleService;
-    private final AdminProperties adminProperties;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        UserDetailsService userDetailsService,
                        ModelMapper modelMapper,
-                       UserRoleService userRoleService, AdminProperties adminProperties) {
+                       UserRoleService userRoleService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.modelMapper = modelMapper;
         this.userRoleService = userRoleService;
-        this.adminProperties = adminProperties;
     }
 
     public void registerUser(UserServiceModel registerUser) throws RoleNotFoundException {
@@ -69,7 +66,7 @@ public class UserService {
     }
 
     public UserProfileViewModel getUserProfile(String name) {
-        Optional<UserEntity> user = userRepository.findUserEntitiesByEmailIgnoreCase(name);
+        Optional<UserEntity> user = userRepository.findUserEntityByEmail(name);
 
         return modelMapper.map(user, UserProfileViewModel.class);
     }
@@ -79,20 +76,16 @@ public class UserService {
             return;
         }
         UserEntity admin = new UserEntity();
-        admin.setEmail(adminProperties.getEmail())
-                .setPassword(passwordEncoder.encode(adminProperties.getPassword()))
-                .setFirstName("admin").setLastName("admin").setUsername("admin")
+        admin.setEmail("admin@admin.com")
+                .setPassword(passwordEncoder.encode("123456"))
+                .setFirstName("admin").setLastName("admin")
                 .setRoles(List.of(userRoleService.findByRole(RoleEnum.ADMIN)));
 
         userRepository.save(admin);
     }
 
     public Optional<UserEntity> findByEmail(String email) {
-        return userRepository.findUserEntitiesByEmailIgnoreCase(email);
-    }
-
-    public Optional<UserEntity> findByUsername(String username) {
-        return userRepository.findUserEntitiesByUsernameIgnoreCase(username);
+        return userRepository.findUserEntityByEmail(email);
     }
 
     public List<UserViewModel> findAllUsers() {

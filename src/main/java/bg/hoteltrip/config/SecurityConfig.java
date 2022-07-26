@@ -1,6 +1,5 @@
 package bg.hoteltrip.config;
 
-import bg.hoteltrip.handlers.CustomAccessDeniedHandler;
 import bg.hoteltrip.repository.UserRepository;
 import bg.hoteltrip.service.HotelTripDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -55,8 +53,8 @@ public class SecurityConfig {
         return new HotelTripDetailsService(userRepository);
     }
 
-    @Bean
-    public AccessDeniedHandler accessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
-    }
+//    @Bean
+//    public AccessDeniedHandler accessDeniedHandler() {
+//        return new CustomAccessDeniedHandler();
+//    }
 }

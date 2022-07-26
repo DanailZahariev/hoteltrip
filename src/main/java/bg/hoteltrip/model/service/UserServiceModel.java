@@ -2,8 +2,6 @@ package bg.hoteltrip.model.service;
 
 public class UserServiceModel {
 
-
-    private String username;
     private String email;
     private String firstName;
     private String lastName;
@@ -46,12 +44,4 @@ public class UserServiceModel {
         return this;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public UserServiceModel setUsername(String username) {
-        this.username = username;
-        return this;
-    }
 }

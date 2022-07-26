@@ -14,7 +14,7 @@ public class HotelEntity extends BaseEntity {
     @ManyToOne(optional = false)
     private TownEntity town;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Column(nullable = false)
     private String description;
 
     @ManyToMany

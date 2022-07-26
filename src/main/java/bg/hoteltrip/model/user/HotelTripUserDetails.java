@@ -5,20 +5,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-public class HotelTripUser implements UserDetails {
+public class HotelTripUserDetails implements UserDetails {
 
 
+    private final Long id;
     private final String password;
     private final String username;
     private final String firstName;
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
 
-    public HotelTripUser(String password,
-                         String username,
-                         String firstName,
-                         String lastName,
-                         Collection<GrantedAuthority> authorities) {
+    public HotelTripUserDetails(Long id, String password,
+                                String username,
+                                String firstName,
+                                String lastName,
+                                Collection<GrantedAuthority> authorities) {
+        this.id = id;
         this.password = password;
         this.username = username;
         this.firstName = firstName;
@@ -26,7 +28,11 @@ public class HotelTripUser implements UserDetails {
         this.authorities = authorities;
     }
 
-    public String fullName() {
+    public Long getId() {
+        return id;
+    }
+
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 
