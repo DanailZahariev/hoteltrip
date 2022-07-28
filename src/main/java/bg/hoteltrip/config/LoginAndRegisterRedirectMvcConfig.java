@@ -6,12 +6,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebConfig implements WebMvcConfigurer {
+public class LoginAndRegisterRedirectMvcConfig implements WebMvcConfigurer {
 
 
     private final UserInterceptor userInterceptor;
 
-    public WebConfig(UserInterceptor userInterceptor) {
+    public LoginAndRegisterRedirectMvcConfig(UserInterceptor userInterceptor) {
         this.userInterceptor = userInterceptor;
     }
 

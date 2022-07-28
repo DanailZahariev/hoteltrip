@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head th:replace="fragments/commons::head">
 </head>
 <body>
 <header th:replace="fragments/commons::navbar"></header>
 
 
-<section th:object="${user}" class="vh-100 bg-image" style="background-color: #f4f5f7;">
+<section th:object="${user}" class="profile-info">
     <div class="container-fluid  d-xl-block">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-6 mb-4 mb-lg-0">

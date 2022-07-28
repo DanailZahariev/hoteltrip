@@ -1,12 +1,14 @@
 body {
-    font-family: Ubuntu, sans-serif;
     font-size: 20px;
+    width: 100%;
+    background-color: #f4f5f7;
 }
 
 .profile-info {
-    font-family: Montserrat, sans-serif;
+    font-family: Ubuntu, sans-serif;
     font-weight: bold;
     font-size: 25px;
+    padding-top: 30px;
 }
 
 .tittle-text {
