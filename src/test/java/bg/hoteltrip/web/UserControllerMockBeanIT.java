@@ -24,7 +24,6 @@ public class UserControllerMockBeanIT {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     public void testRegistrationPageShown() throws Exception {
         mockMvc.perform(get("/users/register")).
@@ -43,7 +42,6 @@ public class UserControllerMockBeanIT {
                         with(csrf())).
                 andExpect(status().is3xxRedirection()).
                 andExpect(redirectedUrl("/"));
-
     }
 
     @Test
@@ -54,7 +52,7 @@ public class UserControllerMockBeanIT {
     }
 
     @Test
-    @WithMockUser(value = TEST_USER_EMAIL, roles = "USER")
+    @WithMockUser(roles = "USER")
     public void profilePageShouldOpenWhenAuthenticatedUser() throws Exception {
         mockMvc.perform(get("/users/profile")).
                 andExpect(status().isOk()).

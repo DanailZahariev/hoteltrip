@@ -2,10 +2,12 @@ package bg.hoteltrip.model.binding;
 
 import bg.hoteltrip.util.validation.FieldMatch;
 import bg.hoteltrip.util.validation.UniqueEmail;
-import bg.hoteltrip.util.validation.UniqueUsername;
+import bg.hoteltrip.util.validation.ValidPicture;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @FieldMatch(

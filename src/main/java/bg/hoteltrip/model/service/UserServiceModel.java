@@ -6,6 +6,7 @@ public class UserServiceModel {
     private String firstName;
     private String lastName;
     private String password;
+    private String confirmPassword;
 
 
     public String getEmail() {
@@ -44,4 +45,12 @@ public class UserServiceModel {
         return this;
     }
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public UserServiceModel setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        return this;
+    }
 }

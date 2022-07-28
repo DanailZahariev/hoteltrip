@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/commons::head">
 </head>
 <body>
@@ -8,15 +9,27 @@
 
 
 <section th:object="${user}" class="vh-100 bg-image" style="background-color: #f4f5f7;">
-    <div class="container h-auto">
+    <div class="container-fluid  d-xl-block">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-6 mb-4 mb-lg-0">
                 <div class="card mb-3" style="border-radius: .5rem;">
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-white"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                 alt="Avatar" class="img-fluid my-5" style="width: 80px;"/>
+                            <th:block th:if="*{profilePictureUrl!=null}">
+                                <img th:src="*{profilePictureUrl}" alt="Avatar" class="img-fluid my-5"
+                                     style="width: 150px;
+                                     border-radius: 50%;">
+                                <br>
+                                <a class="btn btn-danger" th:href="@{/users/profile/delete}">Delete picture</a>
+                            </th:block>
+                            <th:block th:if="*{profilePictureUrl == null}">
+                                <img th:src="@{https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp}"
+                                     alt="Avatar" class="img-fluid my-5" style="width: 100px;"/>
+                                <br>
+                                <a class="btn btn-primary" th:href="@{/users/profile/update}">Update profile
+                                    Picture</a>
+                            </th:block>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body p-4">

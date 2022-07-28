@@ -19,52 +19,62 @@
                             <form th:method="post"
                                   th:action="@{/users/register}"
                                   th:object="${userRegisterBindingModel}"
-                                  class="container row-cols-xl-1">
-                                <div class="col-auto mb-2">
+                                  enctype="multipart/form-data"
+                                  class="container">
+                                <div class="col-auto mb-0">
                                     <label class="form-label" for="firstName">First Name</label>
                                     <input th:field="*{firstName}"
                                            th:errorclass="'is-invalid alert-danger'"
-                                           type="text" id="firstName" class="form-control form-control-lg"/>
+                                           type="text" id="firstName"
+                                           class="form-control form-control-lg"/>
                                     <small class="invalid-feedback text-danger"
-                                           th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small>
+                                           th:if="${#fields.hasErrors('firstName')}"
+                                           th:errors="*{firstName}"></small>
                                 </div>
-                                <div class="col-auto mb-2">
+                                <div class="col-auto mb-0">
                                     <label class="form-label" for="lastName">Second Name</label>
                                     <input th:field="*{lastName}"
                                            th:errorclass="'is-invalid alert-danger'"
-                                           type="text" id="lastName" class="form-control form-control-lg"/>
+                                           type="text" id="lastName"
+                                           class="form-control form-control-lg"/>
                                     <small class="invalid-feedback text-danger"
-                                           th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small>
+                                           th:if="${#fields.hasErrors('lastName')}"
+                                           th:errors="*{lastName}"></small>
                                 </div>
 
-                                <div class="form-outline mb-2">
+                                <div class="form-outline mb-0">
                                     <label class="form-label" for="email">Your Email</label>
                                     <input th:field="*{email}"
                                            th:errorclass="'is-invalid alert-danger'"
-                                           type="email" id="email" class="form-control form-control-lg"/>
+                                           type="email" id="email"
+                                           class="form-control form-control-lg"/>
                                     <small class="invalid-feedback text-danger"
-                                           th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                                           th:if="${#fields.hasErrors('email')}"
+                                           th:errors="*{email}"></small>
                                 </div>
 
-                                <div class="form-outline mb-2">
+                                <div class="form-outline mb-0">
                                     <label class="form-label" for="password">Password</label>
                                     <input th:field="*{password}"
                                            th:errorclass="'is-invalid alert-danger'"
-                                           type="password" id="password" class="form-control form-control-lg"/>
+                                           type="password" id="password"
+                                           class="form-control form-control-lg"/>
                                     <small class="invalid-feedback text-danger"
-                                           th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+                                           th:if="${#fields.hasErrors('password')}"
+                                           th:errors="*{password}"></small>
                                 </div>
 
-                                <div class="form-outline mb-2">
+                                <div class="form-outline mb-0">
                                     <label class="form-label" for="confirmPassword">Repeat your password</label>
                                     <input th:field="*{confirmPassword}"
                                            th:errorclass="'is-invalid alert-danger'"
-                                           type="password" id="confirmPassword" class="form-control form-control-lg"/>
+                                           type="password" id="confirmPassword"
+                                           class="form-control form-control-lg"/>
                                     <small class="invalid-feedback text-danger"
                                            th:if="${#fields.hasErrors('confirmPassword')}"
                                            th:errors="*{confirmPassword}"></small>
                                 </div>
-
+                                <br>
                                 <div class="col-auto d-flex justify-content-center mb-5">
                                     <button type="submit"
                                             class="btn btn-primary">

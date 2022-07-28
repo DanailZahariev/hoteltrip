@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/users")
@@ -38,7 +39,7 @@ public class UserRegisterController {
     @PostMapping("/register")
     public String registerUser(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) throws RoleNotFoundException {
+                               RedirectAttributes redirectAttributes) throws RoleNotFoundException, IOException {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel)

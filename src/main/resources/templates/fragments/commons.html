@@ -46,8 +46,8 @@
                     </th:block>
 
                     <div class="my-2 my-lg-0 px-3">
-                        <a sec:authorize="hasRole('USER')" th:text="Profile"
-                           class="btn btn-link nav-link" th:href="@{/users/profile}">PROFILE
+                        <a sec:authorize="hasRole('USER')" th:text="${session.loggedUserEmail}"
+                           class="btn btn-link nav-link" th:href="@{/users/profile/}">PROFILE
                         </a>
                     </div>
                     <div class="my-2 my-lg-0 px-3">

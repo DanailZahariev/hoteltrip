@@ -18,6 +18,9 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
+    @OneToOne
+    private PictureEntity profilePictureUrl;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @Column(unique = true)
     private List<UserRoleEntity> roles;
@@ -71,4 +74,12 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
+    public PictureEntity getProfilePictureUrl() {
+        return profilePictureUrl;
+    }
+
+    public UserEntity setProfilePictureUrl(PictureEntity profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
+        return this;
+    }
 }
