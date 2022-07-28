@@ -8,6 +8,7 @@ import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.model.view.UserProfileViewModel;
 import bg.hoteltrip.model.view.UserViewModel;
 import bg.hoteltrip.repository.UserRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -76,7 +77,7 @@ public class UserService {
     }
 
     public UserProfileViewModel getUserProfile(String name) {
-        Optional<UserEntity> user = userRepository.findUserEntityByEmail(name);
+        UserEntity user = userRepository.findByEmail(name);
 
         return modelMapper.map(user, UserProfileViewModel.class);
     }
@@ -94,8 +95,8 @@ public class UserService {
         userRepository.save(admin);
     }
 
-    public Optional<UserEntity> findByEmail(String email) {
-        return userRepository.findUserEntityByEmail(email);
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public List<UserViewModel> findAllUsers() {
@@ -125,8 +126,7 @@ public class UserService {
     public void addNewProfilePicture(String name,
                                      UserProfilePictureAddBindingModel userProfilePictureAddBindingModel) throws IOException {
 
-        var user = userRepository.findUserEntityByEmail(name).orElseThrow(() ->
-                new UsernameNotFoundException("User not found"));
+        var user = userRepository.findByEmail(name);
 
         var picture = createPictureEntity(userProfilePictureAddBindingModel.getProfilePictureUrl());
 
@@ -137,8 +137,7 @@ public class UserService {
     }
 
     public void deleteProfilePicture(String name) {
-        UserEntity user = userRepository.findUserEntityByEmail(name).orElseThrow(() ->
-                new UsernameNotFoundException("User not found"));
+        UserEntity user = userRepository.findByEmail(name);
 
         cloudinaryService.delete(user.getProfilePictureUrl().getPublicId());
         String publicId = user.getProfilePictureUrl().getPublicId();

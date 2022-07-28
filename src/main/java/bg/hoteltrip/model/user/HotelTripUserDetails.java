@@ -1,5 +1,6 @@
 package bg.hoteltrip.model.user;
 
+import bg.hoteltrip.model.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -10,21 +11,18 @@ public class HotelTripUserDetails implements UserDetails {
 
     private final Long id;
     private final String password;
-    private final String username;
+    private final String email;
     private final String firstName;
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
 
-    public HotelTripUserDetails(Long id, String password,
-                                String username,
-                                String firstName,
-                                String lastName,
+    public HotelTripUserDetails(UserEntity user,
                                 Collection<GrantedAuthority> authorities) {
-        this.id = id;
-        this.password = password;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.id = user.getId();
+        this.password = user.getPassword();
+        this.email = user.getEmail();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
         this.authorities = authorities;
     }
 
@@ -44,6 +42,10 @@ public class HotelTripUserDetails implements UserDetails {
         return lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
@@ -56,7 +58,7 @@ public class HotelTripUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
