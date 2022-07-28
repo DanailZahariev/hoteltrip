@@ -18,9 +18,9 @@
             <input th:field="*{profilePictureUrl}"
                    type="file" id="profilePictureUrl"
                    class="form-control form-control-lg"/>
-            <small class="invalid-feedback text-danger"
-                   th:each="error: ${#fields.errors('profilePictureUrl')}"
-                   th:text="${error}"></small>
+            <small th:if="${#fields.errors()}"
+                   th:text="${error}"
+                   class="text-danger"></small>
         </div>
         <br>
         <div class="col-auto d-flex justify-content-center mb-5">

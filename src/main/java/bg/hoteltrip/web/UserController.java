@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,15 +63,12 @@ public class UserController {
 
     @PostMapping("/profile/update")
     public String updateProfilePicture(@Valid UserProfilePictureAddBindingModel userProfilePictureAddBindingModel,
-                                       BindingResult bindingResult, RedirectAttributes redirectAttributes,
+                                       RedirectAttributes redirectAttributes,
                                        Principal principal) throws IOException {
 
-        if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("userProfilePictureAddBindingModel",
-                    userProfilePictureAddBindingModel);
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userProfilePictureAddBindingModel",
-                    redirectAttributes);
-
+        if (userProfilePictureAddBindingModel.getProfilePictureUrl().isEmpty()) {
+            redirectAttributes.addFlashAttribute("error",
+                    "Please select a picture!");
             return "redirect:update";
         }
 

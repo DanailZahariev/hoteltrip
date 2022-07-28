@@ -43,7 +43,7 @@ public class HotelController {
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ExceptionHandler({HotelsNotFoundException.class})
-    public ModelAndView onProductNotFound(HotelsNotFoundException hnfe) {
+    public ModelAndView onHotelNotFound(HotelsNotFoundException hnfe) {
         ModelAndView modelAndView = new ModelAndView("hotel-not-found");
         modelAndView.addObject("productId", hnfe.getObjectId());
 
