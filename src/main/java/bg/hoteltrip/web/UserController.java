@@ -78,7 +78,7 @@ public class UserController {
 
         userService.addNewProfilePicture(principal.getName(), userProfilePictureAddBindingModel);
 
-        return "redirect:/";
+        return "redirect:";
     }
 
     @Transactional
@@ -87,7 +87,7 @@ public class UserController {
 
         userService.deleteProfilePicture(principal.getName());
 
-        return "redirect:/";
+        return "redirect:";
     }
 
     @ModelAttribute
