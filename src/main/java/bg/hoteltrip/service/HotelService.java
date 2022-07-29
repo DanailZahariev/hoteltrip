@@ -2,6 +2,7 @@ package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.binding.HotelAddBindingModel;
 import bg.hoteltrip.model.entity.HotelEntity;
+import bg.hoteltrip.model.entity.PictureEntity;
 import bg.hoteltrip.model.entity.RoomEntity;
 import bg.hoteltrip.model.entity.TownEntity;
 import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
@@ -9,7 +10,9 @@ import bg.hoteltrip.model.view.HotelViewModel;
 import bg.hoteltrip.repository.HotelRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,15 +24,18 @@ public class HotelService {
     private final ModelMapper modelMapper;
     private final TownService townService;
     private final RoomService roomService;
+    private final PictureService pictureService;
 
     public HotelService(HotelRepository hotelRepository,
                         ModelMapper modelMapper,
                         TownService townService,
-                        RoomService roomService) {
+                        RoomService roomService,
+                        PictureService pictureService) {
         this.hotelRepository = hotelRepository;
         this.modelMapper = modelMapper;
         this.townService = townService;
         this.roomService = roomService;
+        this.pictureService = pictureService;
     }
 
     public List<HotelViewModel> findHotelByTownId(Long id) {
@@ -38,7 +44,7 @@ public class HotelService {
                 .collect(Collectors.toList());
     }
 
-    public void addHotelEntity(HotelAddBindingModel hotelAddBindingModel) {
+    public void addHotelEntity(HotelAddBindingModel hotelAddBindingModel) throws IOException {
 
         HotelEntity hotel = modelMapper.map(hotelAddBindingModel, HotelEntity.class);
 
@@ -70,6 +76,14 @@ public class HotelService {
         }
 
         hotel.setRooms(rooms);
+
+        List<PictureEntity> pictureEntities = new ArrayList<>();
+        for (MultipartFile hotelPicture : hotelAddBindingModel.getHotelPictures()) {
+            PictureEntity hotelPic = pictureService.createPictureEntity(hotelPicture);
+            pictureService.savePicture(hotelPic);
+            pictureEntities.add(hotelPic);
+            hotel.setHotelPictures(pictureEntities);
+        }
 
         hotelRepository.save(hotel);
     }

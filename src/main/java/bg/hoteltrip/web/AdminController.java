@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -57,7 +58,7 @@ public class AdminController {
     @PostMapping("/add-hotel")
     public String addHotel(@Valid HotelAddBindingModel hotelAddBindingModel,
                            BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes) {
+                           RedirectAttributes redirectAttributes) throws IOException {
 
 
         if (bindingResult.hasErrors()) {
