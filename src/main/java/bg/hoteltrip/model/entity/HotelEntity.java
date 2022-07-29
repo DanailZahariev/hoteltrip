@@ -8,23 +8,23 @@ import java.util.List;
 @Table(name = "hotels")
 public class HotelEntity extends BaseEntity {
 
-    @Column(name = "hotel_name", nullable = false)
+    @Column(name = "hotel_name")
     private String hotelName;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(targetEntity = TownEntity.class, optional = false)
     private TownEntity town;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @ManyToMany
     private List<RoomEntity> rooms;
 
-    @Column(name = "total_rooms", nullable = false)
-    private Integer totalRooms;
+//    @Column(name = "total_rooms")
+//    private Integer totalRooms;
 
-    @ManyToOne
-    private PictureEntity hotelPictures;
+    @ManyToMany
+    private List<PictureEntity> hotelPictures;
 
     public HotelEntity() {
         this.rooms = new ArrayList<>();
@@ -66,20 +66,20 @@ public class HotelEntity extends BaseEntity {
         return this;
     }
 
-    public Integer getTotalRooms() {
-        return totalRooms;
-    }
+//    public Integer getTotalRooms() {
+//        return totalRooms;
+//    }
+//
+//    public HotelEntity setTotalRooms(Integer totalRooms) {
+//        this.totalRooms = totalRooms;
+//        return this;
+//    }
 
-    public HotelEntity setTotalRooms(Integer totalRooms) {
-        this.totalRooms = totalRooms;
-        return this;
-    }
-
-    public PictureEntity getHotelPictures() {
+    public List<PictureEntity> getHotelPictures() {
         return hotelPictures;
     }
 
-    public HotelEntity setHotelPictures(PictureEntity hotelPictures) {
+    public HotelEntity setHotelPictures(List<PictureEntity> hotelPictures) {
         this.hotelPictures = hotelPictures;
         return this;
     }

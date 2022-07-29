@@ -1,14 +1,12 @@
 package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.binding.UserProfilePictureAddBindingModel;
-import bg.hoteltrip.model.entity.PictureEntity;
 import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.model.view.UserProfileViewModel;
 import bg.hoteltrip.model.view.UserViewModel;
 import bg.hoteltrip.repository.UserRepository;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.management.relation.RoleNotFoundException;
 import java.io.IOException;
@@ -77,7 +74,8 @@ public class UserService {
     }
 
     public UserProfileViewModel getUserProfile(String name) {
-        UserEntity user = userRepository.findByEmail(name);
+        UserEntity user = userRepository.findUserEntityByEmail(name).
+                orElseThrow(() -> new UsernameNotFoundException("User not found."));
 
         return modelMapper.map(user, UserProfileViewModel.class);
     }
@@ -95,8 +93,8 @@ public class UserService {
         userRepository.save(admin);
     }
 
-    public UserEntity findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<UserEntity> findByEmail(String email) {
+        return userRepository.findUserEntitiesByEmail(email);
     }
 
     public List<UserViewModel> findAllUsers() {
@@ -111,24 +109,14 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    private PictureEntity createPictureEntity(MultipartFile picture) throws IOException {
-        final CloudinaryImage upload = cloudinaryService.upload(picture);
-
-        PictureEntity image = new PictureEntity();
-
-        image.setPublicId(upload.getPublicId());
-        image.setTittle(picture.getName());
-        image.setUrl(upload.getUrl());
-
-        return image;
-    }
-
     public void addNewProfilePicture(String name,
                                      UserProfilePictureAddBindingModel userProfilePictureAddBindingModel) throws IOException {
 
-        var user = userRepository.findByEmail(name);
+        var user = userRepository.findUserEntityByEmail(name).orElseThrow(()
+                -> new UsernameNotFoundException("User not found."));
 
-        var picture = createPictureEntity(userProfilePictureAddBindingModel.getProfilePictureUrl());
+        var picture = pictureService.
+                createPictureEntity(userProfilePictureAddBindingModel.getProfilePictureUrl());
 
         pictureService.savePicture(picture);
 
@@ -137,7 +125,8 @@ public class UserService {
     }
 
     public void deleteProfilePicture(String name) {
-        UserEntity user = userRepository.findByEmail(name);
+        UserEntity user = userRepository.findUserEntityByEmail(name).orElseThrow(() ->
+                new UsernameNotFoundException("User not found."));
 
         cloudinaryService.delete(user.getProfilePictureUrl().getPublicId());
         String publicId = user.getProfilePictureUrl().getPublicId();

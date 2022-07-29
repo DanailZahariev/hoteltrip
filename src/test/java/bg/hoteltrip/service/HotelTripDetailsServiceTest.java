@@ -42,8 +42,7 @@ public class HotelTripDetailsServiceTest {
                         new UserRoleEntity().setRole(RoleEnum.USER)));
 
 
-        when(mockUserRepo.existsByEmail(testUser.getEmail())).thenReturn(true);
-        when(mockUserRepo.findByEmail(testUser.getEmail())).thenReturn(testUser);
+        when(mockUserRepo.findUserEntitiesByEmail(testUser.getEmail())).thenReturn(Optional.of(testUser));
 
         HotelTripUserDetails userDetails = (HotelTripUserDetails) toTest.loadUserByUsername(testUser.getEmail());
 

@@ -1,6 +1,5 @@
 package bg.hoteltrip.model.user;
 
-import bg.hoteltrip.model.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,13 +15,16 @@ public class HotelTripUserDetails implements UserDetails {
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
 
-    public HotelTripUserDetails(UserEntity user,
+    public HotelTripUserDetails(Long id, String password,
+                                String email,
+                                String firstName,
+                                String lastName,
                                 Collection<GrantedAuthority> authorities) {
-        this.id = user.getId();
-        this.password = user.getPassword();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
+        this.id = id;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.authorities = authorities;
     }
 

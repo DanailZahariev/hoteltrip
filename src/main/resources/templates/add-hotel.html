@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+</head>
+<body>
+<header th:replace="fragments/commons::navbar"></header>
+<section>
+    <div class="d-flex justify-content-center">
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-md-7 p-5">
+                    <div class="card-header-pills card">
+                        <div class="col-auto">
+                            <h2 class="border-bottom mb-lg-6 register-text">Add Hotel</h2>
+                            <form th:action="@{/admin/add-hotel}"
+                                  th:method="post"
+                                  th:object="${hotelAddBindingModel}"
+                                  enctype="multipart/form-data"
+                                  class="container">
+                                <div class="col-auto mb-0">
+                                    <label class="form-label" for="hotelName">Hotel name</label>
+                                    <input th:field="*{hotelName}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="text" id="hotelName"
+                                           class="form-control form-control-lg"/>
+                                    <small th:if="${#fields.hasErrors('hotelName')}"
+                                           th:errors="*{hotelName}"
+                                           class="invalid-feedback text-danger"></small>
+                                </div>
+                                <div class="col-auto mb-0">
+                                    <label class="form-label p-1" for="townName">Town name</label>
+                                    <input th:field="*{townName}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="text" id="townName"
+                                           class="form-control form-control-lg"/>
+                                    <small th:if="${#fields.hasErrors('townName')}"
+                                           th:errors="*{townName}"
+                                           class="invalid-feedback text-danger"></small>
+                                </div>
+
+                                <div class="form-outline mb-0">
+                                    <label class="form-label p-1" for="description">Hotel description</label>
+                                    <input th:field="*{description}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="text" id="description"
+                                           class="form-control form-control-lg"/>
+                                    <small th:if="${#fields.hasErrors('description')}"
+                                           th:errors="*{description}"
+                                           class="invalid-feedback text-danger"></small>
+                                </div>
+                                <div class="form-outline mb-0">
+                                    <label class="form-label p-1" for="doubleRooms">Double rooms</label>
+                                    <input th:field="*{doubleRooms}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="number" id="doubleRooms"
+                                           class="form-control form-control-lg"/>
+                                    <small th:if="${#fields.hasErrors('doubleRooms')}"
+                                           th:errors="*{doubleRooms}"
+                                           class="invalid-feedback text-danger"></small>
+                                </div>
+                                <div class="form-outline mb-0">
+                                    <label class="form-label p-1" for="studio">Studio rooms</label>
+                                    <input th:field="*{studioRooms}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="number" id="studio"
+                                           class="form-control form-control-lg"/>
+                                    <small th:if="${#fields.hasErrors('studioRooms')}"
+                                           th:errors="*{studioRooms}"
+                                           class="invalid-feedback text-danger"></small>
+                                </div>
+                                <div class="form-outline mb-0">
+                                    <label class="form-label p-1" for="apartment">Apartment rooms</label>
+                                    <input th:field="*{apartments}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="number" id="apartment"
+                                           class="form-control form-control-lg"/>
+                                    <small th:if="${#fields.hasErrors('apartments')}"
+                                           th:errors="*{apartments}"
+                                           class="invalid-feedback text-danger"></small>
+                                </div>
+                                <div class="row-cols-sm-auto">
+                                    <h5 class="form-label p-2">Hotel pictures</h5>
+                                    <div class="row-cols-sm-auto">
+                                        <br>
+                                        <input type="file"
+                                               class="form-control form-control-lg"/>
+                                    </div>
+                                </div>
+                                <div class="row-cols-sm-auto">
+                                    <div class="row-cols-sm-auto">
+                                        <br>
+                                        <input type="file"
+                                               class="form-control form-control-lg"/>
+                                    </div>
+                                </div>
+                                <div class="row-cols-sm-auto">
+                                    <div class="row-cols-sm-auto">
+                                        <br>
+                                        <input type="file"
+                                               class="form-control form-control-lg"/>
+                                    </div>
+                                </div>
+                                <div class="row-cols-sm-auto">
+                                    <div class="row-cols-sm-auto">
+                                        <br>
+                                        <input type="file"
+                                               class="form-control form-control-lg"/>
+                                    </div>
+                                </div>
+                                <div class="row-cols-sm-auto">
+                                    <div class="row-cols-sm-auto">
+                                        <br>
+                                        <input type="file"
+                                               class="form-control form-control-lg"/>
+                                    </div>
+                                </div>
+                                <div class="col-auto d-flex justify-content-center p-4">
+                                    <button type="submit"
+                                            class="btn btn-primary w-25">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>
