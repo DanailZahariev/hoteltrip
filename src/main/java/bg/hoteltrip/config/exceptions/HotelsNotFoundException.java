@@ -2,14 +2,14 @@ package bg.hoteltrip.config.exceptions;
 
 public class HotelsNotFoundException extends RuntimeException {
 
-    private final Long objectId;
+    private final String hotelName;
 
-    public HotelsNotFoundException(Long objectId) {
-        super("Hotel with town id " + objectId + " not found!");
-        this.objectId = objectId;
+    public HotelsNotFoundException(String hotelName) {
+        super("Hotel with town id " + hotelName + " not found!");
+        this.hotelName = hotelName;
     }
 
-    public Long getObjectId() {
-        return objectId;
+    public String getHotelName() {
+        return hotelName;
     }
 }

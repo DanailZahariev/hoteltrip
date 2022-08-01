@@ -20,9 +20,6 @@ public class HotelEntity extends BaseEntity {
     @ManyToMany
     private List<RoomEntity> rooms;
 
-//    @Column(name = "total_rooms")
-//    private Integer totalRooms;
-
     @ManyToMany
     private List<PictureEntity> hotelPictures;
 
@@ -65,15 +62,6 @@ public class HotelEntity extends BaseEntity {
         this.rooms = rooms;
         return this;
     }
-
-//    public Integer getTotalRooms() {
-//        return totalRooms;
-//    }
-//
-//    public HotelEntity setTotalRooms(Integer totalRooms) {
-//        this.totalRooms = totalRooms;
-//        return this;
-//    }
 
     public List<PictureEntity> getHotelPictures() {
         return hotelPictures;

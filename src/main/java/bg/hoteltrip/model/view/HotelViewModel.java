@@ -1,12 +1,29 @@
 package bg.hoteltrip.model.view;
 
+import java.util.List;
+
 public class HotelViewModel {
 
+    private Long id;
     private String hotelName;
     private String description;
 
+    private List<PictureViewModel> hotelPictures;
+
     public String getHotelName() {
         return hotelName;
+    }
+
+    public HotelViewModel() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public HotelViewModel setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public HotelViewModel setHotelName(String hotelName) {
@@ -20,6 +37,15 @@ public class HotelViewModel {
 
     public HotelViewModel setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public List<PictureViewModel> getHotelPictures() {
+        return hotelPictures;
+    }
+
+    public HotelViewModel setHotelPictures(List<PictureViewModel> hotelPictures) {
+        this.hotelPictures = hotelPictures;
         return this;
     }
 }

@@ -38,9 +38,9 @@ public class HotelService {
         this.pictureService = pictureService;
     }
 
-    public List<HotelViewModel> findHotelByTownId(Long id) {
-        return hotelRepository.findHotelEntitiesByTownId(id).stream().
-                map(hotel -> modelMapper.map(hotel, HotelViewModel.class))
+    public List<HotelViewModel> findHotelByTownId(String hotelName) {
+        return hotelRepository.findHotelEntitiesByHotelName(hotelName).stream()
+                .map(hotelEntity -> modelMapper.map(hotelEntity, HotelViewModel.class))
                 .collect(Collectors.toList());
     }
 
