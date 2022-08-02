@@ -19,8 +19,8 @@
 
 
 <section class="container-fluid d-flex p-md-2"
-         th:each="u : ${allUsers}"
-         th:object="${u}">
+        th:action="@{/admin/all-users}"
+         th:each="u : ${allUsers}" th:object="${u}">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm">
@@ -35,8 +35,8 @@
             <div class="col-sm">
                 <p th:text="*{email}"></p>
             </div>
-            <form class="col-sm"
-                  th:method="delete"
+            <form  class="col-sm"
+                    th:method="delete"
                   th:action="@{/admin/all-users/{id}/(id=*{id})}">
                 <input class="btn btn-primary" type="submit" value="Delete">
             </form>
