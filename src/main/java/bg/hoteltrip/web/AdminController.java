@@ -5,6 +5,7 @@ import bg.hoteltrip.model.view.UserViewModel;
 import bg.hoteltrip.service.HotelService;
 import bg.hoteltrip.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -41,11 +42,10 @@ public class AdminController {
         return "all-users";
     }
 
-    @GetMapping("/all-users/{id}")
-    public ModelAndView deleteUser(@PathVariable Long id) {
+    @DeleteMapping("/all-users/{id}")
+    public String deleteUser(@PathVariable Long id) {
         userService.deleteUserById(id);
-
-        return new ModelAndView("admin");
+        return "redirect:/admin/all-users";
     }
 
 
@@ -68,7 +68,7 @@ public class AdminController {
             redirectAttributes.
                     addFlashAttribute("org.springframework.validation.BindingResult.hotelAddBindingModel",
                             bindingResult);
-            
+
             return "redirect:add-hotel";
         }
 
