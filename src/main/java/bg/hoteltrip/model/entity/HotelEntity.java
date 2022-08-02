@@ -14,17 +14,27 @@ public class HotelEntity extends BaseEntity {
     @ManyToOne(targetEntity = TownEntity.class, optional = false)
     private TownEntity town;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @Lob
+    @Column(nullable = false)
     private String description;
 
     @ManyToMany
     private List<RoomEntity> rooms;
 
     @ManyToMany
+    @JoinTable(name = "hotels_pictures", joinColumns = @JoinColumn(name = "hotel_id"),
+            inverseJoinColumns = @JoinColumn(name = "picture_id"))
     private List<PictureEntity> hotelPictures;
+
+    @OneToMany
+    @JoinTable(name = "hotels_reservation", joinColumns = @JoinColumn(name = "hotel_id"),
+            inverseJoinColumns = @JoinColumn(name = "reservation_id"))
+    private List<ReservationEntity> reservation;
 
     public HotelEntity() {
         this.rooms = new ArrayList<>();
+        this.hotelPictures = new ArrayList<>();
+        this.reservation = new ArrayList<>();
     }
 
     public String getHotelName() {
@@ -69,6 +79,15 @@ public class HotelEntity extends BaseEntity {
 
     public HotelEntity setHotelPictures(List<PictureEntity> hotelPictures) {
         this.hotelPictures = hotelPictures;
+        return this;
+    }
+
+    public List<ReservationEntity> getReservation() {
+        return reservation;
+    }
+
+    public HotelEntity setReservation(List<ReservationEntity> reservation) {
+        this.reservation = reservation;
         return this;
     }
 }
