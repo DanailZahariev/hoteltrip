@@ -28,12 +28,7 @@ public class HotelController {
     @GetMapping("{name}")
     public String hotelView(@PathVariable String name, Model model) {
 
-
-        List<HotelViewModel> hotel = hotelService.findHotelByTownId(name);
-
-        if (hotel.isEmpty()) {
-            throw new HotelsNotFoundException(name);
-        }
+        List<HotelViewModel> hotel = hotelService.findHotelByTownName(name);
 
         model.addAttribute("hotel", hotel);
 
@@ -45,7 +40,7 @@ public class HotelController {
     @ExceptionHandler({HotelsNotFoundException.class})
     public ModelAndView onHotelNotFound(HotelsNotFoundException hnfe) {
         ModelAndView modelAndView = new ModelAndView("hotel-not-found");
-        modelAndView.addObject("productId", hnfe.getHotelName());
+        modelAndView.addObject("hotel", hnfe.getHotelName());
 
         return modelAndView;
     }

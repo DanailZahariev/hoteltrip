@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends JpaRepository<HotelEntity, Long> {
 
-    @Query("select h from HotelEntity h where h.town.townName=:townName")
-    List<HotelEntity> findHotelEntitiesByHotelName(@Param("townName")
-                                                   String townName);
+    @Query("select h,min (r.price) from HotelEntity h join h.rooms r" +
+            " where h.town.townName=:townName group by h.id")
+    List<HotelEntity> findHotelEntitiesByTown_TownName(@Param("townName")
+                                                       String townName);
 }

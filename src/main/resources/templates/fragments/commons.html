@@ -29,36 +29,36 @@
         <!-- Nav Bar -->
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="/">HotelTrip</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nabarCollapse"
-                    aria-controls="nabarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="nabarCollapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto">
                     <th:block sec:authorize="!isAuthenticated()">
                         <li class="nav-item">
-                            <a class="nav-link active nav-text btn-link"
+                            <a class="nav-link active"
                                th:href="@{/users/login}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active nav-text btn-link"
+                            <a class="nav-link active"
                                th:href="@{/users/register}">Register</a>
                         </li>
                     </th:block>
 
-                    <div class="my-2 my-lg-0 px-3">
+                    <div class="my-2 my-md-0 px-3">
                         <a sec:authorize="hasRole('USER')" th:text="${#authentication.principal.getFullName}"
-                           class="btn btn-link nav-link" th:href="@{/users/profile/}">PROFILE
+                           class="nav-link active" th:href="@{/users/profile/}">PROFILE
                         </a>
                     </div>
-                    <div class="my-2 my-lg-0 px-3">
+                    <div class="my-2 my-md-0 px-3">
                         <a sec:authorize="hasRole('ADMIN')"
-                           class="btn btn-link nav-link" th:href="@{/admin}">Admin Page
+                           class="nav-link active" th:href="@{/admin}">Admin Page
                         </a>
                     </div>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <div class="my-2 my-lg-0 px-3">
+                        <div class="my-2 my-md-0 px-3">
                             <form th:action="@{/users/logout}" th:method="post">
                                 <input class="btn btn-link nav-link" type="submit" value="Logout">
                             </form>

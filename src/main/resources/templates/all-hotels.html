@@ -31,7 +31,7 @@
                     <div class="rating">
                     </div>
                     <p class="hotel-description" th:text="*{h.description}"></p>
-                    <!--                    <h4 class="price">current price: <span>$180</span></h4>-->
+                    <h4>From: <span th:text="*{h.rooms[0].price}"></span> BGN</h4>
                     <div class="action">
                         <button class="add-to-cart btn btn-default" type="button">See availability</button>
                     </div>

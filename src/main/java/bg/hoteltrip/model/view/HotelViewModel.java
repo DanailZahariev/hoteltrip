@@ -1,5 +1,7 @@
 package bg.hoteltrip.model.view;
 
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class HotelViewModel {
@@ -10,6 +12,7 @@ public class HotelViewModel {
 
     private List<PictureViewModel> hotelPictures;
 
+    private List<HotelRoomViewModel> rooms;
     public String getHotelName() {
         return hotelName;
     }
@@ -48,4 +51,14 @@ public class HotelViewModel {
         this.hotelPictures = hotelPictures;
         return this;
     }
+
+    public List<HotelRoomViewModel> getRooms() {
+        return rooms;
+    }
+
+    public HotelViewModel setRooms(List<HotelRoomViewModel> rooms) {
+        this.rooms = rooms;
+        return this;
+    }
+
 }

@@ -1,7 +1,6 @@
 package bg.hoteltrip.model.entity;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,6 +18,8 @@ public class HotelEntity extends BaseEntity {
     private String description;
 
     @ManyToMany
+    @JoinTable(name = "hotels_rooms", joinColumns = @JoinColumn(name = "hotel_id"),
+            inverseJoinColumns = @JoinColumn(name = "room_id"))
     private List<RoomEntity> rooms;
 
     @ManyToMany
@@ -32,9 +33,6 @@ public class HotelEntity extends BaseEntity {
     private List<ReservationEntity> reservation;
 
     public HotelEntity() {
-        this.rooms = new ArrayList<>();
-        this.hotelPictures = new ArrayList<>();
-        this.reservation = new ArrayList<>();
     }
 
     public String getHotelName() {

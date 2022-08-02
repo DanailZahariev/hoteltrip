@@ -75,7 +75,7 @@ body {
     flex-direction: column;
 }
 
-.hotel-tittle, .rating, .hotel-description, .price, .vote, .sizes {
+.hotel-tittle, .rating, .hotel-description {
     margin-bottom: 15px;
 }
 
