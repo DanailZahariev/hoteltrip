@@ -7,39 +7,44 @@
 </head>
 <body>
 <header th:replace="fragments/commons::navbar"></header>
-
-<div class="container" th:each="h : ${hotel}">
-    <div class="card">
-        <div class="container-fluid">
-            <div class="wrapper row">
-                <div class="preview col-md-5">
-                    <div class="preview-pic tab-content">
-                        <div class="tab-pane active" id="pic-1">
-                            <img th:src="*{h.getHotelPictures()[0].getUrl()}" alt="hotel-img"/>
-                        </div>
-                        <div class="p-3">
-                            <i class="fa-solid fa-wifi icons"></i>
-                            <i class="fa-solid fa-square-parking icons"></i>
-                            <i class="fa-solid fa-mug-saucer icons"></i>
-                            <i class="fa-solid fa-martini-glass-empty icons"></i>
-                            <i class="fa-solid fa-ban-smoking icons"></i>
+<form class="container" th:each="h : ${hotel}"
+      th:object="${h}">
+    <div>
+        <div class="card">
+            <div class="container-fluid">
+                <div class="wrapper row">
+                    <div class="preview col-md-5">
+                        <div class="preview-pic tab-content">
+                            <div class="tab-pane active" id="pic-1">
+                                <img th:src="*{getHotelPictures()[0].getUrl()}" alt="hotel-img"/>
+                            </div>
+                            <div class="p-3">
+                                <i class="fa-solid fa-wifi icons"></i>
+                                <i class="fa-solid fa-square-parking icons"></i>
+                                <i class="fa-solid fa-mug-saucer icons"></i>
+                                <i class="fa-solid fa-martini-glass-empty icons"></i>
+                                <i class="fa-solid fa-ban-smoking icons"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="details col-md-7">
-                    <h3 class="hotel-tittle" th:text="*{h.hotelName}"></h3>
-                    <div class="rating">
-                    </div>
-                    <p class="hotel-description" th:text="*{h.description}"></p>
-                    <h4>From: <span th:text="*{h.rooms[0].price}"></span> BGN</h4>
-                    <div class="action">
-                        <button class="add-to-cart btn btn-default" type="button">See availability</button>
+                    <div class="details col-md-7">
+                        <h3 class="hotel-tittle" th:text="*{hotelName}"></h3>
+                        <div class="rating">
+                        </div>
+                        <p class="hotel-description" th:text="*{description}"></p>
+                        <div class="action">
+                            <button class="btn btn-primary btn-outline-primary" type="button">
+                                <a class="text-decoration-none text-white"
+                                   th:href="@{/hotels/hotel-details/{hotelName}/(hotelName=*{hotelName})}">
+                                    See Hotel</a></button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    </div>
+</form>
 <footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>

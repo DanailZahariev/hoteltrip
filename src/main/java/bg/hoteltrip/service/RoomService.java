@@ -2,19 +2,26 @@ package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.RoomEntity;
 import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
+import bg.hoteltrip.model.view.HotelRoomViewModel;
 import bg.hoteltrip.repository.RoomRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final ModelMapper modelMapper;
 
-    public RoomService(RoomRepository roomRepository) {
+    public RoomService(RoomRepository roomRepository, ModelMapper modelMapper) {
         this.roomRepository = roomRepository;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -38,6 +45,13 @@ public class RoomService {
     }
 
     public RoomEntity findByRoomType(RoomTypeEnum roomTypeEnum) {
-       return roomRepository.findByRoomType(roomTypeEnum);
+        return roomRepository.findByRoomType(roomTypeEnum);
     }
+
+    public List<HotelRoomViewModel> findAllRoomsByHotelName(RoomTypeEnum roomTypeEnum, String name) {
+        return roomRepository.findAllByRoomTypeAndHotelEntityHotelName(roomTypeEnum, name).
+                stream().map(roomEntity -> modelMapper.map(roomEntity, HotelRoomViewModel.class)).
+                collect(Collectors.toList());
+    }
+
 }

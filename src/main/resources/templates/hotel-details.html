@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head">
+    <meta charset="UTF-8">
+    <title>HotelTrip</title>
+</head>
+<body>
+<header th:replace="fragments/commons::navbar"></header>
+<div class="container"
+     th:object="${hotelDetail}">
+    <div class="card">
+        <div class="container-fluid">
+            <div class="wrapper row">
+
+                <section class="w-50">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" role="listbox">
+                            <div class="carousel-item" th:each="picture,itemStat : *{hotelPictures}"
+                                 th:classappend="${itemStat.index} == 0 ? 'active' : '' ">
+                                <div class="view">
+                                    <img class="d-flex w-100"
+                                         th:src="*{hotelPictures[__${itemStat.index}__].url}"
+                                         alt="slide">
+                                </div>
+                            </div>
+
+                            <button class="carousel-control-prev" type="button"
+                                    data-bs-target="#carouselExampleControls"
+                                    data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                    data-bs-target="#carouselExampleControls"
+                                    data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <div class="details col-md-6">
+                    <h3 th:text="*{hotelName}" class="hotel-tittle"></h3>
+                    <div class="rating">
+                    </div>
+                    <p class="hotel-description" th:text="*{description}"></p>
+                    <th:block th:if="${studioRooms}">
+                        <div class="row-cols-auto room-border">
+                            <div class="row-cols-auto">
+                                <h4 class="row-cols-auto">Double rooms</h4>
+                                <img class="w-50" src="/images/single-room.jpg" alt="double-room">
+                                <div class="justify-content-end">
+                                    <small class="justify-content-end">This single room has a bathrobe, air conditioning
+                                        and minibar.</small>
+                                </div>
+                                <a class="btn btn-primary"
+                                   th:href="@{/hotels/reservation/studio/{id}(id=*{id})}">Reserve</a>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${doubleRooms}">
+                        <div class="row-cols-auto room-border">
+                            <div class="row-cols-auto">
+                                <h4 class="row-cols-auto">Double rooms</h4>
+                                <img class="w-50" src="/images/double-room.jpg" alt="double-room">
+                                <div class="justify-content-end">
+                                    <small class="justify-content-end">Spacious room with Smart TV, free entrance to
+                                        gym,
+                                        daily
+                                        complimentary mineral water,
+                                        free daily turn-down service and yoga set upon request. Tea and coffee making
+                                        facilities
+                                        are provided.</small>
+                                </div>
+                                <a class="btn btn-primary"
+                                   th:href="@{/hotels/reservation/double/{id}(id=*{id})}">Reserve</a>
+                            </div>
+                        </div>
+                    </th:block>
+
+                    <th:block th:if="${apartmentRooms}">
+                        <div class="row-cols-auto room-border">
+                            <div class="row-cols-auto">
+                                <h4 class="row-cols-auto">Apartment rooms</h4>
+                                <img class="w-50" src="/images/apartment-room.jpg" alt="apartment-room">
+                                <div class="justify-content-end">
+                                    <small class="justify-content-end"> Get delighted by the luxurious atmosphere in our
+                                        three rooms Grand Suites of 140 m². Featuring a master king-size bedroom with a
+                                        walk-in closet, a lounge with a comfortable sofa, a dining area for 6 people,
+                                        and a
+                                        separate working area. The apartments could be expanded with a connecting
+                                        Superior
+                                        twin room (subject to an extra charge). As an extra benefit, you will have
+                                        access to
+                                        а private lounge space /available up to 2 hours, booking required/. Enjoy a
+                                        complimentary Two-Way private airport transfer with your booking.
+                                    </small>
+                                </div>
+                                <a class="btn btn-primary"
+                                   th:href="@{/hotels/reservation/apartment/{id}(id=*{id})}">Reserve</a>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

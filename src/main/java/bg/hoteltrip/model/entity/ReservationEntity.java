@@ -1,17 +1,15 @@
 package bg.hoteltrip.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "reservation")
 public class ReservationEntity extends BaseEntity {
 
     @ManyToOne
-    private UserEntity guestReservation;
+    private UserEntity user;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
@@ -22,15 +20,20 @@ public class ReservationEntity extends BaseEntity {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
+    @ManyToMany
+    @JoinTable(name = "hotels_reservation", joinColumns = @JoinColumn(name = "reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "room_id"))
+    private List<RoomEntity> rooms;
+
     public ReservationEntity() {
     }
 
-    public UserEntity getGuestReservation() {
-        return guestReservation;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public ReservationEntity setGuestReservation(UserEntity guestReservation) {
-        this.guestReservation = guestReservation;
+    public ReservationEntity setUser(UserEntity user) {
+        this.user = user;
         return this;
     }
 
@@ -58,6 +61,15 @@ public class ReservationEntity extends BaseEntity {
 
     public ReservationEntity setActive(boolean active) {
         isActive = active;
+        return this;
+    }
+
+    public List<RoomEntity> getRoom() {
+        return rooms;
+    }
+
+    public ReservationEntity setRoom(List<RoomEntity> rooms) {
+        this.rooms = rooms;
         return this;
     }
 }
