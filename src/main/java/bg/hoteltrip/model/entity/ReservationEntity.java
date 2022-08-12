@@ -20,10 +20,11 @@ public class ReservationEntity extends BaseEntity {
     @Column(name = "is_active", nullable = false)
     private boolean isActive;
 
-    @ManyToMany
-    @JoinTable(name = "hotels_reservation", joinColumns = @JoinColumn(name = "reservation_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_id"))
-    private List<RoomEntity> rooms;
+    @ManyToOne
+    private HotelEntity hotel;
+
+    @ManyToOne
+    private RoomEntity rooms;
 
     public ReservationEntity() {
     }
@@ -64,11 +65,21 @@ public class ReservationEntity extends BaseEntity {
         return this;
     }
 
-    public List<RoomEntity> getRoom() {
+
+    public HotelEntity getHotel() {
+        return hotel;
+    }
+
+    public ReservationEntity setHotel(HotelEntity hotel) {
+        this.hotel = hotel;
+        return this;
+    }
+
+    public RoomEntity getRooms() {
         return rooms;
     }
 
-    public ReservationEntity setRoom(List<RoomEntity> rooms) {
+    public ReservationEntity setRooms(RoomEntity rooms) {
         this.rooms = rooms;
         return this;
     }

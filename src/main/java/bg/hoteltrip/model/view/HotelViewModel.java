@@ -8,10 +8,8 @@ public class HotelViewModel {
     private Long id;
     private String hotelName;
     private String description;
-
     private List<PictureViewModel> hotelPictures;
 
-    private List<HotelRoomViewModel> rooms;
 
     public String getHotelName() {
         return hotelName;
@@ -52,12 +50,4 @@ public class HotelViewModel {
         return this;
     }
 
-    public List<HotelRoomViewModel> getRooms() {
-        return rooms;
-    }
-
-    public HotelViewModel setRooms(List<HotelRoomViewModel> rooms) {
-        this.rooms = rooms;
-        return this;
-    }
 }

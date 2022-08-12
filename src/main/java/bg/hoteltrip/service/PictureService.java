@@ -35,7 +35,6 @@ public class PictureService {
         PictureEntity image = new PictureEntity();
 
         image.setPublicId(upload.getPublicId());
-        image.setTittle(picture.getName());
         image.setUrl(upload.getUrl());
 
         return image;

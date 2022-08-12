@@ -1,16 +1,19 @@
 package bg.hoteltrip.web;
 
 import bg.hoteltrip.config.exceptions.HotelsNotFoundException;
+import bg.hoteltrip.model.dto.SearchAvailabilityHotelDTO;
 import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
-import bg.hoteltrip.model.view.HotelRoomViewModel;
+import bg.hoteltrip.model.view.HotelReservationViewModel;
 import bg.hoteltrip.model.view.HotelViewModel;
 import bg.hoteltrip.service.HotelService;
+import bg.hoteltrip.service.ReservationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -18,13 +21,17 @@ import java.util.List;
 public class HotelController {
 
     private final HotelService hotelService;
+    private final ReservationService reservationService;
 
-    public HotelController(HotelService hotelService) {
+    public HotelController(HotelService hotelService,
+                           ReservationService reservationService) {
         this.hotelService = hotelService;
+        this.reservationService = reservationService;
     }
 
     @GetMapping("{townName}")
-    public String hotelViewByTown(@PathVariable String townName, Model model) {
+    public String hotelViewByTown(@PathVariable String townName,
+                                  Model model) {
 
         List<HotelViewModel> hotel = hotelService.findHotelByTownName(townName);
         if (hotel.isEmpty()) {
@@ -37,19 +44,20 @@ public class HotelController {
     }
 
     @GetMapping("/hotel-details/{name}")
-    public String hotelDetailView(@PathVariable String name, Model model) {
+    public String hotelDetailView(@PathVariable String name,
+                                  SearchAvailabilityHotelDTO searchAvailabilityHotelDTO,
+                                  Model model) {
+
+        LocalDate startDate = searchAvailabilityHotelDTO.getStartDate();
+        LocalDate endDate = searchAvailabilityHotelDTO.getEndDate();
+
+
+
+
 
         HotelViewModel hotelDetail = hotelService.findHotelByName(name);
         model.addAttribute("hotelDetail", hotelDetail);
 
-
-        List<HotelRoomViewModel> studio = hotelService.findAvailabilityByRoomType(name, RoomTypeEnum.STUDIO);
-        List<HotelRoomViewModel> apartment = hotelService.findAvailabilityByRoomType(name, RoomTypeEnum.APARTMENT);
-        List<HotelRoomViewModel> doubleRoom = hotelService.findAvailabilityByRoomType(name, RoomTypeEnum.DOUBLE_ROOM);
-
-        model.addAttribute("studioRooms", studio);
-        model.addAttribute("doubleRooms", doubleRoom);
-        model.addAttribute("apartmentRooms", apartment);
 
         return "hotel-details";
     }
@@ -61,5 +69,10 @@ public class HotelController {
         modelAndView.addObject("hotel", hnfe.getHotelName());
 
         return modelAndView;
+    }
+
+    @ModelAttribute
+    public SearchAvailabilityHotelDTO searchAvailabilityHotelDTO() {
+        return new SearchAvailabilityHotelDTO();
     }
 }

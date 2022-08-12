@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,33 +56,16 @@ public class HotelService {
         HotelEntity hotel = modelMapper.map(hotelAddBindingModel, HotelEntity.class);
 
         boolean townExist = townService.existTown(hotelAddBindingModel.getTownName());
-        TownEntity existingHotel = townService.findBytownName(hotelAddBindingModel.getTownName());
+        TownEntity existingTown = townService.findBytownName(hotelAddBindingModel.getTownName());
 
         if (townExist) {
-            hotel.setTown(existingHotel);
+            hotel.setTown(existingTown);
         } else {
             TownEntity town = new TownEntity();
             town.setTownName(hotelAddBindingModel.getTownName());
             TownEntity newTown = townService.saveTown(town);
             hotel.setTown(newTown);
         }
-
-        RoomEntity apartment = roomService.findByRoomType(RoomTypeEnum.APARTMENT);
-        RoomEntity studio = roomService.findByRoomType(RoomTypeEnum.STUDIO);
-        RoomEntity doubleRoom = roomService.findByRoomType(RoomTypeEnum.DOUBLE_ROOM);
-        List<RoomEntity> rooms = new ArrayList<>();
-
-        for (int i = 0; i < hotelAddBindingModel.getApartments(); i++) {
-            rooms.add(apartment);
-        }
-        for (int i = 0; i < hotelAddBindingModel.getStudioRooms(); i++) {
-            rooms.add(studio);
-        }
-        for (int i = 0; i < hotelAddBindingModel.getDoubleRooms(); i++) {
-            rooms.add(doubleRoom);
-        }
-
-        hotel.setRooms(rooms);
 
         List<PictureEntity> pictureEntities = new ArrayList<>();
         for (MultipartFile hotelPicture : hotelAddBindingModel.getHotelPictures()) {
@@ -92,10 +75,61 @@ public class HotelService {
             hotel.setHotelPictures(pictureEntities);
         }
 
+
+        List<RoomEntity> rooms = new ArrayList<>();
+
+        for (int i = 0; i < hotelAddBindingModel.getApartments(); i++) {
+
+            RoomEntity apartment = new RoomEntity().setHotel(hotel)
+                    .setPrice(BigDecimal.valueOf(199, 0))
+                    .setRoomType(RoomTypeEnum.APARTMENT);
+
+            apartment = roomService.saveRoom(apartment);
+
+            rooms.add(apartment);
+            hotel.setRooms(rooms);
+            hotelRepository.save(hotel);
+
+        }
+
+        for (int i = 0; i < hotelAddBindingModel.getStudioRooms(); i++) {
+
+            RoomEntity studio = new RoomEntity().setHotel(hotel)
+                    .setPrice(BigDecimal.valueOf(99, 0))
+                    .setRoomType(RoomTypeEnum.STUDIO);
+
+            studio = roomService.saveRoom(studio);
+
+            rooms.add(studio);
+            hotel.setRooms(rooms);
+            hotelRepository.save(hotel);
+
+
+        }
+
+        for (int i = 0; i < hotelAddBindingModel.getDoubleRooms(); i++) {
+
+            RoomEntity doubleRoom = new RoomEntity().setHotel(hotel)
+                    .setPrice(BigDecimal.valueOf(129, 0))
+                    .setRoomType(RoomTypeEnum.DOUBLE_ROOM);
+
+            doubleRoom = roomService.saveRoom(doubleRoom);
+
+            rooms.add(doubleRoom);
+            hotel.setRooms(rooms);
+            hotelRepository.save(hotel);
+
+        }
+
+
         hotelRepository.save(hotel);
     }
 
-    public List<HotelRoomViewModel> findAvailabilityByRoomType(String name, RoomTypeEnum roomTypeEnum) {
-        return roomService.findAllRoomsByHotelName(roomTypeEnum, name);
+    public List<HotelRoomViewModel> hotelByRoomType(String name, String roomType) {
+
+        var hotel = hotelRepository.findByHotelName(name);
+
+        return roomService.findAllRoomsByHotelAndType(hotel, roomType);
+
     }
 }

@@ -3,7 +3,6 @@ package bg.hoteltrip.model.view;
 public class PictureViewModel {
 
     private Long id;
-    private String name;
     private String url;
     private String publicId;
 
@@ -16,15 +15,6 @@ public class PictureViewModel {
 
     public PictureViewModel setId(Long id) {
         this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public PictureViewModel setName(String name) {
-        this.name = name;
         return this;
     }
 

@@ -3,8 +3,6 @@ package bg.hoteltrip.service;
 import bg.hoteltrip.repository.ReservationRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 @Service
 public class ReservationService {
 
@@ -12,5 +10,6 @@ public class ReservationService {
 
     public ReservationService(ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
+
     }
 }

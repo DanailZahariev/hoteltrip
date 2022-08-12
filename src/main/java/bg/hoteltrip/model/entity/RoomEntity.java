@@ -18,10 +18,10 @@ public class RoomEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToMany(mappedBy = "rooms")
-    private List<HotelEntity> hotelEntity;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private HotelEntity hotel;
 
-    @ManyToMany(mappedBy = "rooms")
+    @ManyToMany
     private List<ReservationEntity> reservation;
 
     public RoomEntity() {
@@ -45,12 +45,12 @@ public class RoomEntity extends BaseEntity {
         return this;
     }
 
-    public List<HotelEntity> getHotelEntity() {
-        return hotelEntity;
+    public HotelEntity getHotel() {
+        return hotel;
     }
 
-    public RoomEntity setHotelEntity(List<HotelEntity> hotelEntity) {
-        this.hotelEntity = hotelEntity;
+    public RoomEntity setHotel(HotelEntity hotel) {
+        this.hotel = hotel;
         return this;
     }
 

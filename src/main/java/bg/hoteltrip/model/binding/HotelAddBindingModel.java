@@ -1,5 +1,6 @@
 package bg.hoteltrip.model.binding;
 
+import bg.hoteltrip.util.validation.ValidPicture;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
@@ -23,14 +24,14 @@ public class HotelAddBindingModel {
     @Size(min = 30, message = "Hotel description must have at least 30 characters")
     private String description;
 
-    @Min(value = 1,message = "Add at least one room")
-    @NotNull
+    @Min(value = 1, message = "Add at least one room")
+    @NotNull(message = "Add at least one room")
     private Integer doubleRooms;
-    @Min(value = 1,message = "Add at least one room")
-    @NotNull
+    @Min(value = 1, message = "Add at least one room")
+    @NotNull(message = "Add at least one room")
     private Integer studioRooms;
-    @Min(value = 1,message = "Add at least one room")
-    @NotNull
+    @Min(value = 1, message = "Add at least one room")
+    @NotNull(message = "Add at least one room")
     private Integer apartments;
 
     private List<MultipartFile> hotelPictures;

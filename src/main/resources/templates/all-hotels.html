@@ -7,9 +7,9 @@
 </head>
 <body>
 <header th:replace="fragments/commons::navbar"></header>
-<form class="container" th:each="h : ${hotel}"
-      th:object="${h}">
-    <div>
+<section class="container" th:each="h : ${hotel}"
+         th:object="${h}">
+    <div class="row-cols-auto">
         <div class="card">
             <div class="container-fluid">
                 <div class="wrapper row">
@@ -32,11 +32,12 @@
                         <div class="rating">
                         </div>
                         <p class="hotel-description" th:text="*{description}"></p>
-                        <div class="action">
-                            <button class="btn btn-primary btn-outline-primary" type="button">
-                                <a class="text-decoration-none text-white"
-                                   th:href="@{/hotels/hotel-details/{hotelName}/(hotelName=*{hotelName})}">
-                                    See Hotel</a></button>
+
+                        <div class="row-cols-auto">
+                            <button class="btn btn-primary btn-outline-primary" type="submit">
+                                <a th:href="@{/hotels/hotel-details/{hotelName}(hotelName=${h.hotelName})}"
+                                   class="text-decoration-none text-white">
+                                    See Availability</a></button>
                         </div>
                     </div>
                 </div>
@@ -44,7 +45,7 @@
         </div>
     </div>
     </div>
-</form>
+</section>
 <footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <header th:replace="fragments/commons::navbar"></header>
 
 
-<section th:object="${user}" class="profile-info">
+<div th:object="${user}" class="profile-info">
     <div class="container-fluid  d-xl-block">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-lg-6 mb-4 mb-lg-0">
@@ -19,17 +19,38 @@
                                 <img th:src="*{profilePictureUrl}" alt="Avatar" class="img-fluid my-5"
                                      style="width: 150px;
                                      border-radius: 50%;">
-                                <br>
-                                <a class="btn btn-danger" th:href="@{/users/profile/delete}">Delete picture</a>
+<!--                                <br>-->
+<!--                                <a class="btn btn-danger" th:href="@{/users/profile/delete}">Delete picture</a>-->
                             </th:block>
                             <th:block th:if="*{profilePictureUrl == null}">
                                 <img th:src="@{https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp}"
                                      alt="Avatar" class="img-fluid my-5" style="width: 100px;"/>
-                                <br>
-                                <a class="btn btn-primary" th:href="@{/users/profile/update}">Update profile
-                                    Picture</a>
+
+<!--                                <form th:method="post"-->
+<!--                                      th:action="@{/users/profile/}"-->
+<!--                                      th:object="${userProfilePictureAddBindingModel}"-->
+<!--                                      enctype="multipart/form-data"-->
+<!--                                      class="row-cols-auto">-->
+<!--                                    <div class="row-cols-sm-auto">-->
+<!--                                        <input th:field="*{profilePictureUrl}"-->
+<!--                                               type="file" name="picture"-->
+<!--                                               class="form-control form-control-sm"/>-->
+<!--                                        <small th:if="${#fields.hasAnyErrors()}"-->
+<!--                                               id="profilePictureUrl"-->
+<!--                                               th:text="${error}"-->
+<!--                                               class="form-text alert-danger rounded"></small>-->
+<!--                                    </div>-->
+<!--                                    <br>-->
+<!--                                    <div class="col-auto d-flex justify-content-center mb-4">-->
+<!--                                        <button type="submit"-->
+<!--                                                class="btn btn-outline-primary">-->
+<!--                                            Update-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </form>-->
                             </th:block>
                         </div>
+
                         <div class="col-md-8">
                             <div class="card-body p-4">
                                 <h6 class="profile-info">Information</h6>
@@ -50,12 +71,14 @@
                                 </div>
                             </div>
                         </div>
+                        <a class="btn btn-primary"
+                           th:href="@{/users/profile/edit}">Update profile</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 <footer th:replace="fragments/commons::footer"></footer>
 </body>
 </html>

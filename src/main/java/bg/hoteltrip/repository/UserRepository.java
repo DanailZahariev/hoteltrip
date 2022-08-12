@@ -18,4 +18,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("select u from UserEntity u join u.roles r " +
             "where r.role = bg.hoteltrip.model.entity.enums.RoleEnum.USER")
     List<UserEntity> findAllUsersByRoleUser();
+
+    Optional<UserEntity> findByEmailIgnoreCase(String email);
 }

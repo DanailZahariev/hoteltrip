@@ -17,19 +17,17 @@ public class HotelEntity extends BaseEntity {
     @Column(nullable = false)
     private String description;
 
-    @ManyToMany
-    @JoinTable(name = "hotels_rooms", joinColumns = @JoinColumn(name = "hotel_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_id"))
+    @OneToMany(targetEntity = RoomEntity.class)
+//    @JoinTable(name = "hotels_rooms", joinColumns = @JoinColumn(name = "hotel_id"),
+//            inverseJoinColumns = @JoinColumn(name = "room_id"))
     private List<RoomEntity> rooms;
 
-    @ManyToMany
+    @OneToMany
     @JoinTable(name = "hotels_pictures", joinColumns = @JoinColumn(name = "hotel_id"),
             inverseJoinColumns = @JoinColumn(name = "picture_id"))
     private List<PictureEntity> hotelPictures;
 
-    @OneToMany
-    @JoinTable(name = "hotels_reservation", joinColumns = @JoinColumn(name = "hotel_id"),
-            inverseJoinColumns = @JoinColumn(name = "reservation_id"))
+    @OneToMany(targetEntity = ReservationEntity.class)
     private List<ReservationEntity> reservation;
 
     public HotelEntity() {

@@ -134,4 +134,27 @@ public class UserService {
         user.setProfilePictureUrl(null);
         userRepository.save(user);
     }
+
+    public void updateUserProfile(Optional<UserEntity> user) {
+    }
+
+    public UserServiceModel findUser(String email) {
+        return this.userRepository
+                .findByEmailIgnoreCase(email)
+                .map(userEntity -> modelMapper.map(userEntity, UserServiceModel.class))
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not exists."));
+    }
+
+    public void updateUserProfile(UserServiceModel userServiceModel, String email) {
+
+        UserEntity user = userRepository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not exists."));
+
+
+        user.setEmail(userServiceModel.getEmail())
+                .setFirstName(userServiceModel.getFirstName())
+                .setLastName(userServiceModel.getLastName());
+
+        userRepository.save(user);
+    }
 }

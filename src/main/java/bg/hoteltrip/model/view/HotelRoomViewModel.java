@@ -12,7 +12,7 @@ public class HotelRoomViewModel {
 
     private BigDecimal price;
 
-    private List<HotelViewModel> hotelEntity;
+    private List<HotelReservationViewModel> reservation;
 
     public HotelRoomViewModel() {
     }
@@ -44,12 +44,12 @@ public class HotelRoomViewModel {
         return this;
     }
 
-    public List<HotelViewModel> getHotelEntity() {
-        return hotelEntity;
+    public List<HotelReservationViewModel> getReservation() {
+        return reservation;
     }
 
-    public HotelRoomViewModel setHotelEntity(List<HotelViewModel> hotelEntity) {
-        this.hotelEntity = hotelEntity;
+    public HotelRoomViewModel setReservation(List<HotelReservationViewModel> reservation) {
+        this.reservation = reservation;
         return this;
     }
 }
