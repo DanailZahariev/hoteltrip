@@ -1,29 +1,36 @@
 package bg.hoteltrip.web;
 
 import bg.hoteltrip.model.binding.HotelAddBindingModel;
-import bg.hoteltrip.model.view.UserViewModel;
-import bg.hoteltrip.service.HotelService;
-import bg.hoteltrip.service.UserService;
+import bg.hoteltrip.model.view.UsersAllViewModel;
+import bg.hoteltrip.service.impl.HotelServiceImpl;
+import bg.hoteltrip.service.impl.UserServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.management.relation.RoleNotFoundException;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
-    private final HotelService hotelService;
+    private final UserServiceImpl userServiceImpl;
+    private final HotelServiceImpl hotelServiceImpl;
+    private final ModelMapper modelMapper;
 
-    public AdminController(UserService userService, HotelService hotelService) {
-        this.userService = userService;
-        this.hotelService = hotelService;
+    public AdminController(UserServiceImpl userServiceImpl,
+                           HotelServiceImpl hotelServiceImpl,
+                           ModelMapper modelMapper) {
+        this.userServiceImpl = userServiceImpl;
+        this.hotelServiceImpl = hotelServiceImpl;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -34,18 +41,33 @@ public class AdminController {
     @GetMapping("/all-users")
     public String viewAndDeleteUsers(Model model) {
 
-        List<UserViewModel> users = userService.findAllUsers();
+        List<UsersAllViewModel> users = this.userServiceImpl.findAllUsers()
+                .stream()
+                .map(usersAllServiceModel -> this.modelMapper.map(usersAllServiceModel, UsersAllViewModel.class))
+                .collect(Collectors.toList());
 
         model.addAttribute("allUsers", users);
         return "all-users";
     }
 
-    @DeleteMapping("/all-users/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userService.deleteUserById(id);
-        return "redirect:/admin/all-users";
+    @PatchMapping("/all-users/add-admin")
+    public String makeUserAdmin(@RequestParam Long id) throws RoleNotFoundException {
+
+        userServiceImpl.makeUserAdmin(id);
+        return "redirect:";
     }
 
+    @PatchMapping("/all-users/remove-admin")
+    public String removeUserAdmin(@RequestParam Long id) throws RoleNotFoundException {
+        userServiceImpl.removeAdminRole(id);
+        return "redirect:";
+    }
+
+    @DeleteMapping("/all-users/remove-user")
+    public String deleteUser(@RequestParam Long id) {
+        userServiceImpl.deleteUserById(id);
+        return "redirect:";
+    }
 
     @GetMapping("/add-hotel")
     public String hotel() {
@@ -70,7 +92,7 @@ public class AdminController {
             return "redirect:add-hotel";
         }
 
-        hotelService.addHotelEntity(hotelAddBindingModel);
+        hotelServiceImpl.addHotelEntity(hotelAddBindingModel);
 
         return "admin";
     }

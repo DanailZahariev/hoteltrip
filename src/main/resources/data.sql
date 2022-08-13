@@ -47,9 +47,6 @@
 -- values ('2022-08-06', '2022-08-10', 1, 1, 1, 1),
 --        ('2022-08-06', '2022-08-10', 1, 1, 1, 2);
 --
--- insert into rooms_reservation(room_entity_id, reservation_id)
--- values (1, 1),
---        (3, 2);
 --
 -- insert into hotels_reservation(hotel_entity_id, reservation_id)
 -- values (1, 1),

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/commons::head">
+  <meta charset="UTF-8">
+  <title>HotelTrip</title>
+</head>
+<body>
+<header th:replace="fragments/commons::navbar"></header>
+
+<div class="not-found-body">
+  <h1 class="footer">The page you're looking is not accessible!</h1>
+  <button class="btn btn-primary"><a class="text-white text-decoration-none" th:href="@{'/'}">Home</a></button>
+</div>
+
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

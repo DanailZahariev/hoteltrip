@@ -22,7 +22,6 @@ public class UserEntity extends BaseEntity {
     private PictureEntity profilePictureUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @Column(unique = true)
     private List<UserRoleEntity> roles;
 
 

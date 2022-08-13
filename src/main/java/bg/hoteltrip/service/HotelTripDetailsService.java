@@ -21,7 +21,7 @@ public class HotelTripDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) {
         return userRepository.
-                findUserEntitiesByEmail(email).
+                findUserEntityByEmail(email).
                 map(this::map).
                 orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found!"));
     }
@@ -46,22 +46,4 @@ public class HotelTripDetailsService implements UserDetailsService {
                 userRole.
                         getRole().name());
     }
-
-
-
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//        if (!userRepository.existsByEmail(email)) {
-//            throw new UsernameNotFoundException("User not found");
-//        }
-//        UserEntity user = userRepository.findByEmail(email);
-//
-//        List<GrantedAuthority> authorities = user.getRoles()
-//                .stream().map(u -> "ROLE_" + u.getRole().name())
-//                .map(SimpleGrantedAuthority::new)
-//                .collect(Collectors.toList());
-//
-//        return new HotelTripUserDetails(user, authorities);
-//    }
 }

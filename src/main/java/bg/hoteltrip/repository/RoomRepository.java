@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<RoomEntity, Long> {
 
-    List<RoomEntity> findAllByHotelAndRoomType(HotelEntity hotel, RoomTypeEnum roomType);
+//    List<RoomEntity> findByHotelAndRoomType(HotelEntity hotel, RoomTypeEnum roomType);
 
 }

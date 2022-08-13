@@ -2,7 +2,7 @@ package bg.hoteltrip.web;
 
 import bg.hoteltrip.model.binding.UserRegisterBindingModel;
 import bg.hoteltrip.model.service.UserServiceModel;
-import bg.hoteltrip.service.UserService;
+import bg.hoteltrip.service.impl.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,12 +20,12 @@ import java.io.IOException;
 @RequestMapping("/users")
 public class UserRegisterController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final ModelMapper modelMapper;
 
-    public UserRegisterController(UserService userService,
+    public UserRegisterController(UserServiceImpl userServiceImpl,
                                   ModelMapper modelMapper) {
-        this.userService = userService;
+        this.userServiceImpl = userServiceImpl;
         this.modelMapper = modelMapper;
     }
 
@@ -48,7 +48,7 @@ public class UserRegisterController {
         }
 
         UserServiceModel newUser = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
-        userService.registerUser(newUser);
+        userServiceImpl.registerUser(newUser);
 
         return "redirect:/";
     }

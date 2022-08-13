@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="/css/admin-view.css">
     <link rel="stylesheet" href="/css/all-hotel-view.css">
     <link rel="stylesheet" href="/css/hotel-detail.css">
+    <script src="/js/search.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,10 +67,14 @@
                         </div>
                     </li>
                 </ul>
-                <!--                <form class="d-flex">-->
-                <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-                <!--                    <button class="btn btn-outline-primary btn-search" type="submit">Search</button>-->
-                <!--                </form>-->
+                <form class="d-flex"
+                      method="get"
+                      id="searchForm"
+                      action="api/search/">
+                    <input class="form-control me-2" id="search-input"
+                           type="search"  placeholder="Search places..." aria-label="Search">
+                    <button id="result" class="btn btn-close-white" type="submit">Search</button>
+                </form>
             </div>
         </nav>
     </div>

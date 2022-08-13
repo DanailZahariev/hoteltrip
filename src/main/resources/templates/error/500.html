@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::navbar"></header>
+
+<div class="not-found-body">
+    <h1>This Page Isn't Available</h1>
+    <p>The link may be broken, or the page may have been removed.</p>
+    <button class="btn btn-primary"><a class="text-white text-decoration-none" th:href="@{'/'}">Home</a></button>
+</div>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

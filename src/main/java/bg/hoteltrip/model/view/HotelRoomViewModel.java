@@ -3,7 +3,6 @@ package bg.hoteltrip.model.view;
 import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class HotelRoomViewModel {
 
@@ -12,7 +11,7 @@ public class HotelRoomViewModel {
 
     private BigDecimal price;
 
-    private List<HotelReservationViewModel> reservation;
+    private HotelViewByID hotel;
 
     public HotelRoomViewModel() {
     }
@@ -44,12 +43,12 @@ public class HotelRoomViewModel {
         return this;
     }
 
-    public List<HotelReservationViewModel> getReservation() {
-        return reservation;
+    public HotelViewByID getHotel() {
+        return hotel;
     }
 
-    public HotelRoomViewModel setReservation(List<HotelReservationViewModel> reservation) {
-        this.reservation = reservation;
+    public HotelRoomViewModel setHotel(HotelViewByID hotel) {
+        this.hotel = hotel;
         return this;
     }
 }

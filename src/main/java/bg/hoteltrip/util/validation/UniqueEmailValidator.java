@@ -1,6 +1,6 @@
 package bg.hoteltrip.util.validation;
 
-import bg.hoteltrip.service.UserService;
+import bg.hoteltrip.service.impl.UserServiceImpl;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -8,10 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
-    public UniqueEmailValidator(UserService userService) {
-        this.userService = userService;
+    public UniqueEmailValidator(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
     @Override
@@ -21,6 +21,6 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
-        return userService.findByEmail(email).isEmpty();
+        return userServiceImpl.findByEmail(email).isEmpty();
     }
 }

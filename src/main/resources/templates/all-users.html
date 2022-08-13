@@ -6,21 +6,21 @@
 <body>
 <header th:replace="fragments/commons::navbar"></header>
 
-<!--<div class="container-fluid">-->
-<!--    <div class="row">-->
-<!--        <p class="col-sm">ID</p>-->
-<!--        <p class="col-sm">First Name</p>-->
-<!--        <p class="col-sm">Last Name</p>-->
-<!--        <p class="col-sm">Email</p>-->
-<!--        <p class="col-sm">Delete user</p>-->
+<div class="container-fluid">
+    <div class="row">
+        <p class="col-sm">ID</p>
+        <p class="col-sm">First Name</p>
+        <p class="col-sm">Last Name</p>
+        <p class="col-sm">Email</p>
+        <p class="col-sm">User role</p>
+        <p class="col-sm">Delete user</p>
+    </div>
+</div>
 
-<!--    </div>-->
-<!--</div>-->
 
-
-<section class="container-fluid d-flex p-md-2"
-        th:action="@{/admin/all-users}"
-         th:each="u : ${allUsers}" th:object="${u}">
+<div class="container-fluid d-flex pb-md-3"
+     th:action="@{/admin/all-users}"
+     th:each="u : ${allUsers}" th:object="${u}">
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm">
@@ -35,14 +35,29 @@
             <div class="col-sm">
                 <p th:text="*{email}"></p>
             </div>
-            <form  class="col-sm"
-                    th:method="delete"
-                  th:action="@{/admin/all-users/{id}/(id=*{id})}">
-                <input class="btn btn-primary" type="submit" value="Delete">
-            </form>
+            <div th:if="*{roles.size()==1}" class="col-md-1"></div>
+            <div class="col-sm">
+                <div th:if="*{roles.size()==1 && id!=1}" class="col-sm">
+                    <form th:action="@{/admin/all-users/add-admin(id=*{id})}" th:method="PATCH">
+                        <button class="btn-sm btn-primary" type="submit">Make admin</button>
+                    </form>
+                </div>
+                <div th:if="*{roles.size()>1 && id!=1} " class="col-sm">
+                    <form th:action="@{/admin/all-users/remove-admin(id=*{id})}" th:method="PATCH">
+                        <button class="btn-sm btn-primary" type="submit">Remove admin</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm" th:if="*{id !=1}">
+                <form class="col-sm"
+                      th:method="DELETE"
+                      th:action="@{/admin/all-users/remove-user(id=*{id})}">
+                    <button class="btn-sm btn-primary" type="submit">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
-</section>
+</div>
 
 <footer th:replace="fragments/commons::footer"></footer>
 </body>

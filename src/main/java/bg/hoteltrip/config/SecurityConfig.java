@@ -27,6 +27,8 @@ public class SecurityConfig {
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 antMatchers("/users/login", "/users/register").permitAll().
                 antMatchers("/hotels/**", "/").permitAll().
+                antMatchers("/search/**").permitAll().
+                antMatchers("/reservation/**").fullyAuthenticated().
                 antMatchers("/profile/**").hasRole("USER").
                 antMatchers("/admin/**").hasRole("ADMIN").
                 anyRequest().
@@ -52,8 +54,4 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new HotelTripDetailsService(userRepository);
     }
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler() {
-//        return new CustomAccessDeniedHandler();
-//    }
 }

@@ -21,9 +21,6 @@ public class RoomEntity extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private HotelEntity hotel;
 
-    @ManyToMany
-    private List<ReservationEntity> reservation;
-
     public RoomEntity() {
     }
 
@@ -51,15 +48,6 @@ public class RoomEntity extends BaseEntity {
 
     public RoomEntity setHotel(HotelEntity hotel) {
         this.hotel = hotel;
-        return this;
-    }
-
-    public List<ReservationEntity> getReservation() {
-        return reservation;
-    }
-
-    public RoomEntity setReservation(List<ReservationEntity> reservation) {
-        this.reservation = reservation;
         return this;
     }
 }

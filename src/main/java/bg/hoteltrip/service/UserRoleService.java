@@ -2,34 +2,12 @@ package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.UserRoleEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
-import bg.hoteltrip.repository.UserRoleRepository;
-import org.springframework.stereotype.Service;
 
 import javax.management.relation.RoleNotFoundException;
-import java.util.Arrays;
 
-@Service
-public class UserRoleService {
+public interface UserRoleService {
 
-    private final UserRoleRepository userRoleRepository;
+    UserRoleEntity findByRole(RoleEnum role) throws RoleNotFoundException;
 
-    public UserRoleService(UserRoleRepository userRoleRepository) {
-        this.userRoleRepository = userRoleRepository;
-    }
-
-    public UserRoleEntity findByRole(RoleEnum role) throws RoleNotFoundException {
-        return userRoleRepository.findAllByRole(role)
-                .orElseThrow(() -> new RoleNotFoundException("Role " + role + " does not exist!"));
-    }
-
-    public void initRoles() {
-        if (userRoleRepository.count() != 0) {
-            return;
-        }
-        Arrays.stream(RoleEnum.values()).forEach(roleEnum -> {
-            UserRoleEntity userRole = new UserRoleEntity();
-            userRole.setRole(roleEnum);
-            userRoleRepository.save(userRole);
-        });
-    }
+    void initRoles();
 }

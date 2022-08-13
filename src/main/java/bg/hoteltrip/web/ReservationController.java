@@ -1,6 +1,6 @@
 package bg.hoteltrip.web;
 
-import bg.hoteltrip.service.ReservationService;
+import bg.hoteltrip.service.impl.ReservationServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/hotels")
 public class ReservationController {
 
-    private final ReservationService reservationService;
+    private final ReservationServiceImpl reservationServiceImpl;
 
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
+    public ReservationController(ReservationServiceImpl reservationServiceImpl) {
+        this.reservationServiceImpl = reservationServiceImpl;
     }
 
     @GetMapping("/reservation")
