@@ -7,7 +7,7 @@ import javax.management.relation.RoleNotFoundException;
 
 public interface UserRoleService {
 
-    UserRoleEntity findByRole(RoleEnum role) throws RoleNotFoundException;
+    UserRoleEntity findByRole(RoleEnum role);
 
     void initRoles();
 }

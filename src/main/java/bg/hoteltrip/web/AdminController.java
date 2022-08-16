@@ -2,6 +2,8 @@ package bg.hoteltrip.web;
 
 import bg.hoteltrip.model.binding.HotelAddBindingModel;
 import bg.hoteltrip.model.view.UsersAllViewModel;
+import bg.hoteltrip.service.HotelService;
+import bg.hoteltrip.service.UserService;
 import bg.hoteltrip.service.impl.HotelServiceImpl;
 import bg.hoteltrip.service.impl.UserServiceImpl;
 import org.modelmapper.ModelMapper;
@@ -21,15 +23,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserServiceImpl userServiceImpl;
-    private final HotelServiceImpl hotelServiceImpl;
+    private final UserService userService;
+    private final HotelService hotelService;
     private final ModelMapper modelMapper;
 
-    public AdminController(UserServiceImpl userServiceImpl,
-                           HotelServiceImpl hotelServiceImpl,
+    public AdminController(UserService userService,
+                           HotelService hotelService,
                            ModelMapper modelMapper) {
-        this.userServiceImpl = userServiceImpl;
-        this.hotelServiceImpl = hotelServiceImpl;
+        this.userService = userService;
+        this.hotelService = hotelService;
         this.modelMapper = modelMapper;
     }
 
@@ -41,7 +43,7 @@ public class AdminController {
     @GetMapping("/all-users")
     public String viewAndDeleteUsers(Model model) {
 
-        List<UsersAllViewModel> users = this.userServiceImpl.findAllUsers()
+        List<UsersAllViewModel> users = this.userService.findAllUsers()
                 .stream()
                 .map(usersAllServiceModel -> this.modelMapper.map(usersAllServiceModel, UsersAllViewModel.class))
                 .collect(Collectors.toList());
@@ -53,19 +55,19 @@ public class AdminController {
     @PatchMapping("/all-users/add-admin")
     public String makeUserAdmin(@RequestParam Long id) throws RoleNotFoundException {
 
-        userServiceImpl.makeUserAdmin(id);
+        userService.makeUserAdmin(id);
         return "redirect:";
     }
 
     @PatchMapping("/all-users/remove-admin")
     public String removeUserAdmin(@RequestParam Long id) throws RoleNotFoundException {
-        userServiceImpl.removeAdminRole(id);
+        userService.removeAdminRole(id);
         return "redirect:";
     }
 
     @DeleteMapping("/all-users/remove-user")
     public String deleteUser(@RequestParam Long id) {
-        userServiceImpl.deleteUserById(id);
+        userService.deleteUserById(id);
         return "redirect:";
     }
 
@@ -92,7 +94,7 @@ public class AdminController {
             return "redirect:add-hotel";
         }
 
-        hotelServiceImpl.addHotelEntity(hotelAddBindingModel);
+        hotelService.addHotelEntity(hotelAddBindingModel);
 
         return "admin";
     }

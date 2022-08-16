@@ -21,6 +21,9 @@ public class RoomEntity extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private HotelEntity hotel;
 
+    @ManyToOne
+    private ReservationEntity reservation;
+
     public RoomEntity() {
     }
 

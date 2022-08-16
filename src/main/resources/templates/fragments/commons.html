@@ -50,7 +50,7 @@
                     </th:block>
 
                     <div class="my-2 my-md-0 px-3">
-                        <a sec:authorize="hasRole('USER')" th:text="${#authentication.principal.getFullName}"
+                        <a sec:authorize="hasRole('USER')" th:text="${#authentication.name}"
                            class="nav-link active" th:href="@{/users/profile/}">PROFILE
                         </a>
                     </div>

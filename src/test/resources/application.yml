@@ -2,13 +2,17 @@ spring:
   datasource:
     driverClassName: org.hsqldb.jdbc.JDBCDriver
     url: jdbc:hsqldb:mem:testdb;sql.syntax_mys=true
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: create-drop
+    generate-ddl: true
+    properties:
+      dialect: org.hibernate.dialect.HSQLDialect
+
   sql:
     init:
       mode: never
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.HSQLDialect
 
   #Cloudinary Properties
 cloudinary:

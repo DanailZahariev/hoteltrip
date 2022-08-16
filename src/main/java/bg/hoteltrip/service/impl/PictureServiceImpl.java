@@ -3,23 +3,24 @@ package bg.hoteltrip.service.impl;
 import bg.hoteltrip.model.entity.PictureEntity;
 import bg.hoteltrip.repository.PictureRepository;
 import bg.hoteltrip.service.CloudinaryImage;
+import bg.hoteltrip.service.CloudinaryService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @Service
-public class PictureServiceImpl implements PictureService {
+public class PictureServiceImpl implements bg.hoteltrip.service.PictureService {
 
     private final PictureRepository pictureRepository;
-    private final CloudinaryServiceImpl cloudinaryServiceImpl;
+    private final CloudinaryService cloudinaryService;
 
     public PictureServiceImpl(
             PictureRepository pictureRepository,
-            CloudinaryServiceImpl cloudinaryServiceImpl) {
+            CloudinaryService cloudinaryService) {
 
         this.pictureRepository = pictureRepository;
-        this.cloudinaryServiceImpl = cloudinaryServiceImpl;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public PictureEntity createPictureEntity(MultipartFile picture) throws IOException {
-        final CloudinaryImage upload = cloudinaryServiceImpl.upload(picture);
+        final CloudinaryImage upload = cloudinaryService.upload(picture);
 
         PictureEntity image = new PictureEntity();
 

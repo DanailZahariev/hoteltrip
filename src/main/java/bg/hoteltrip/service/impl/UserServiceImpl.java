@@ -8,9 +8,10 @@ import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.model.service.UsersAllServiceModel;
 import bg.hoteltrip.model.view.UserProfileViewModel;
 import bg.hoteltrip.repository.UserRepository;
-import bg.hoteltrip.service.impl.CloudinaryServiceImpl;
-import bg.hoteltrip.service.impl.PictureServiceImpl;
-import bg.hoteltrip.service.impl.UserRoleServiceImpl;
+import bg.hoteltrip.service.CloudinaryService;
+import bg.hoteltrip.service.PictureService;
+import bg.hoteltrip.service.UserRoleService;
+import bg.hoteltrip.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,12 +22,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleNotFoundException;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,31 +35,32 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
     private final ModelMapper modelMapper;
-    private final UserRoleServiceImpl userRoleServiceImpl;
-    private final CloudinaryServiceImpl cloudinaryServiceImpl;
-    private final PictureServiceImpl pictureServiceImpl;
+    private final UserRoleService userRoleService;
+    private final CloudinaryService cloudinaryService;
+    private final PictureService pictureService;
 
     public UserServiceImpl(UserRepository userRepository,
                            PasswordEncoder passwordEncoder,
                            UserDetailsService userDetailsService,
                            ModelMapper modelMapper,
-                           UserRoleServiceImpl userRoleServiceImpl,
-                           CloudinaryServiceImpl cloudinaryServiceImpl, PictureServiceImpl pictureServiceImpl) {
+                           UserRoleService userRoleService,
+                           CloudinaryService cloudinaryService,
+                           PictureService pictureService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
         this.modelMapper = modelMapper;
-        this.userRoleServiceImpl = userRoleServiceImpl;
-        this.cloudinaryServiceImpl = cloudinaryServiceImpl;
-        this.pictureServiceImpl = pictureServiceImpl;
+        this.userRoleService = userRoleService;
+        this.cloudinaryService = cloudinaryService;
+        this.pictureService = pictureService;
     }
 
     @Override
-    public void registerUser(UserServiceModel registerUser) throws RoleNotFoundException {
+    public void registerUser(UserServiceModel registerUser) {
 
         UserEntity newUser = modelMapper.map(registerUser, UserEntity.class);
         newUser.setPassword(passwordEncoder.encode(registerUser.getPassword()));
-        newUser.setRoles(List.of(userRoleServiceImpl.findByRole(RoleEnum.USER)));
+        newUser.setRoles(List.of(userRoleService.findByRole(RoleEnum.USER)));
 
         userRepository.save(newUser);
         loginUser(newUser);
@@ -89,12 +88,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void initAdmin() throws RoleNotFoundException {
+    public void initAdmin() {
         if (userRepository.count() != 0) {
             return;
         }
-        UserRoleEntity adminRole = userRoleServiceImpl.findByRole(RoleEnum.ADMIN);
-        UserRoleEntity userRole = userRoleServiceImpl.findByRole(RoleEnum.USER);
+        UserRoleEntity adminRole = userRoleService.findByRole(RoleEnum.ADMIN);
+        UserRoleEntity userRole = userRoleService.findByRole(RoleEnum.USER);
 
         UserEntity admin = new UserEntity();
         admin.setEmail("admin@admin.com")
@@ -131,10 +130,10 @@ public class UserServiceImpl implements UserService {
         var user = userRepository.findUserEntityByEmail(name).orElseThrow(()
                 -> new UsernameNotFoundException("User not found."));
 
-        var picture = pictureServiceImpl.
+        var picture = pictureService.
                 createPictureEntity(userProfilePictureAddBindingModel.getProfilePictureUrl());
 
-        pictureServiceImpl.savePicture(picture);
+        pictureService.savePicture(picture);
 
         user.setProfilePictureUrl(picture);
         userRepository.save(user);
@@ -145,9 +144,9 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findUserEntityByEmail(name).orElseThrow(() ->
                 new UsernameNotFoundException("User not found."));
 
-        cloudinaryServiceImpl.delete(user.getProfilePictureUrl().getPublicId());
+        cloudinaryService.delete(user.getProfilePictureUrl().getPublicId());
         String publicId = user.getProfilePictureUrl().getPublicId();
-        pictureServiceImpl.deletePicture(publicId);
+        pictureService.deletePicture(publicId);
         user.setProfilePictureUrl(null);
         userRepository.save(user);
     }
@@ -175,19 +174,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void makeUserAdmin(Long id) throws RoleNotFoundException {
+    public void makeUserAdmin(Long id) {
         UserEntity user = userRepository.findById(id).orElseThrow(()
                 -> new UsernameNotFoundException("User with id " + id + " not exists."));
-        user.getRoles().add(userRoleServiceImpl.findByRole(RoleEnum.ADMIN));
+        user.getRoles().add(userRoleService.findByRole(RoleEnum.ADMIN));
         userRepository.save(user);
     }
 
     @Override
-    public void removeAdminRole(Long id) throws RoleNotFoundException {
+    public void removeAdminRole(Long id) {
         UserEntity user = userRepository.findById(id).orElseThrow(()
                 -> new UsernameNotFoundException("User with id " + id + " not exists."));
         if (user.getId() != 1) {
-            user.getRoles().remove(this.userRoleServiceImpl.findByRole(RoleEnum.ADMIN));
+            user.getRoles().remove(userRoleService.findByRole(RoleEnum.ADMIN));
             userRepository.save(user);
         }
 

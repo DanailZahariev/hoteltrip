@@ -1,10 +1,11 @@
-package bg.hoteltrip.service;
+package bg.hoteltrip.service.impl;
 
 import bg.hoteltrip.model.entity.UserEntity;
 import bg.hoteltrip.model.entity.UserRoleEntity;
 import bg.hoteltrip.model.entity.enums.RoleEnum;
 import bg.hoteltrip.model.user.HotelTripUserDetails;
 import bg.hoteltrip.repository.UserRepository;
+import bg.hoteltrip.service.HotelTripDetailsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

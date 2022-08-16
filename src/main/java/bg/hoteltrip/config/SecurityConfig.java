@@ -25,11 +25,10 @@ public class SecurityConfig {
         httpSecurity.
                 authorizeRequests().
                 requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                antMatchers("/users/login", "/users/register").permitAll().
-                antMatchers("/hotels/**", "/").permitAll().
-                antMatchers("/search/**").permitAll().
-                antMatchers("/reservation/**").fullyAuthenticated().
-                antMatchers("/profile/**").hasRole("USER").
+                antMatchers("/users/login", "/users/register", "/", "/hotels/**", "/api/search/")
+                .permitAll().
+                antMatchers("/reservation/**").hasRole("USER").
+                antMatchers("/users/**").hasRole("USER").
                 antMatchers("/admin/**").hasRole("ADMIN").
                 anyRequest().
                 authenticated().

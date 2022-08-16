@@ -6,7 +6,6 @@ import bg.hoteltrip.repository.UserRoleRepository;
 import bg.hoteltrip.service.UserRoleService;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleNotFoundException;
 import java.util.Arrays;
 
 @Service
@@ -19,9 +18,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public UserRoleEntity findByRole(RoleEnum role) throws RoleNotFoundException {
-        return userRoleRepository.findAllByRole(role)
-                .orElseThrow(() -> new RoleNotFoundException("Role " + role + " does not exist!"));
+    public UserRoleEntity findByRole(RoleEnum role) {
+        return userRoleRepository.findByRole(role);
     }
 
     @Override

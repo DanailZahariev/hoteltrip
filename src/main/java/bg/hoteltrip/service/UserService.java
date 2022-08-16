@@ -1,4 +1,4 @@
-package bg.hoteltrip.service.impl;
+package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.binding.UserProfilePictureAddBindingModel;
 import bg.hoteltrip.model.entity.UserEntity;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface UserService {
 
 
-    void registerUser(UserServiceModel registerUser) throws RoleNotFoundException;
+    void registerUser(UserServiceModel registerUser);
 
     UserProfileViewModel getUserProfile(String name);
 

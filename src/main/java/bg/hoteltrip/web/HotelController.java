@@ -2,8 +2,11 @@ package bg.hoteltrip.web;
 
 import bg.hoteltrip.config.exceptions.HotelsNotFoundException;
 import bg.hoteltrip.model.view.HotelViewModel;
+import bg.hoteltrip.service.HotelService;
+import bg.hoteltrip.service.RoomService;
 import bg.hoteltrip.service.impl.HotelServiceImpl;
 import bg.hoteltrip.service.impl.RoomServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,20 +19,23 @@ import java.util.List;
 @RequestMapping("/hotels")
 public class HotelController {
 
-    private final HotelServiceImpl hotelServiceImpl;
-    private final RoomServiceImpl roomServiceImpl;
+    private final HotelService hotelService;
+    private final ModelMapper modelMapper;
+    private final RoomService roomService;
 
-    public HotelController(HotelServiceImpl hotelServiceImpl, RoomServiceImpl roomServiceImpl) {
-        this.hotelServiceImpl = hotelServiceImpl;
-
-        this.roomServiceImpl = roomServiceImpl;
+    public HotelController(HotelService hotelService,
+                           ModelMapper modelMapper,
+                           RoomService roomService) {
+        this.hotelService = hotelService;
+        this.modelMapper = modelMapper;
+        this.roomService = roomService;
     }
 
     @GetMapping("{townName}")
     public String hotelViewByTown(@PathVariable String townName,
                                   Model model) {
 
-        List<HotelViewModel> hotel = hotelServiceImpl.findHotelByTownName(townName);
+        List<HotelViewModel> hotel = hotelService.findHotelByTownName(townName);
         if (hotel.isEmpty()) {
             throw new HotelsNotFoundException(townName);
         }
@@ -44,7 +50,7 @@ public class HotelController {
                                   Model model) {
 
 
-        HotelViewModel hotelDetail = hotelServiceImpl.findHotelByName(name);
+        HotelViewModel hotelDetail = modelMapper.map(hotelService.findHotelByName(name), HotelViewModel.class);
 
         if (hotelDetail == null) {
             throw new HotelsNotFoundException(name);
@@ -53,12 +59,6 @@ public class HotelController {
 
         model.addAttribute("hotelDetail", hotelDetail);
 
-        var hotel = hotelServiceImpl.findHotelByName(name);
-
-
-//        model.addAttribute("studio", studio);
-//        model.addAttribute("dRoom", dRoom);
-//        model.addAttribute("apartment", apartment);
 
         return "hotel-details";
     }

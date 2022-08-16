@@ -9,6 +9,9 @@ import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
 import bg.hoteltrip.model.view.HotelViewModel;
 import bg.hoteltrip.repository.HotelRepository;
 import bg.hoteltrip.service.HotelService;
+import bg.hoteltrip.service.PictureService;
+import bg.hoteltrip.service.RoomService;
+import bg.hoteltrip.service.TownService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,20 +27,20 @@ public class HotelServiceImpl implements HotelService {
 
     private final HotelRepository hotelRepository;
     private final ModelMapper modelMapper;
-    private final TownServiceImpl townServiceImpl;
-    private final RoomServiceImpl roomServiceImpl;
-    private final PictureServiceImpl pictureServiceImpl;
+    private final TownService townService;
+    private final RoomService roomService;
+    private final PictureService pictureService;
 
     public HotelServiceImpl(HotelRepository hotelRepository,
                             ModelMapper modelMapper,
-                            TownServiceImpl townServiceImpl,
-                            RoomServiceImpl roomServiceImpl,
-                            PictureServiceImpl pictureServiceImpl) {
+                            TownService townService,
+                            RoomService roomService,
+                            PictureService pictureService) {
         this.hotelRepository = hotelRepository;
         this.modelMapper = modelMapper;
-        this.townServiceImpl = townServiceImpl;
-        this.roomServiceImpl = roomServiceImpl;
-        this.pictureServiceImpl = pictureServiceImpl;
+        this.townService = townService;
+        this.roomService = roomService;
+        this.pictureService = pictureService;
     }
 
     @Override
@@ -53,8 +56,8 @@ public class HotelServiceImpl implements HotelService {
     }
 
     @Override
-    public HotelViewModel findHotelByName(String name) {
-        return modelMapper.map(hotelRepository.findHotelEntitiesByHotelName(name), HotelViewModel.class);
+    public HotelEntity findHotelByName(String name) {
+        return hotelRepository.findByHotelName(name);
     }
 
     @Override
@@ -62,22 +65,22 @@ public class HotelServiceImpl implements HotelService {
 
         HotelEntity hotel = modelMapper.map(hotelAddBindingModel, HotelEntity.class);
 
-        boolean townExist = townServiceImpl.existTown(hotelAddBindingModel.getTownName());
-        TownEntity existingTown = townServiceImpl.findByTownName(hotelAddBindingModel.getTownName());
+        boolean townExist = townService.existTown(hotelAddBindingModel.getTownName());
+        TownEntity existingTown = townService.findByTownName(hotelAddBindingModel.getTownName());
 
         if (townExist) {
             hotel.setTown(existingTown);
         } else {
             TownEntity town = new TownEntity();
             town.setTownName(hotelAddBindingModel.getTownName());
-            TownEntity newTown = townServiceImpl.saveTown(town);
+            TownEntity newTown = townService.saveTown(town);
             hotel.setTown(newTown);
         }
 
         List<PictureEntity> pictureEntities = new ArrayList<>();
         for (MultipartFile hotelPicture : hotelAddBindingModel.getHotelPictures()) {
-            PictureEntity hotelPic = pictureServiceImpl.createPictureEntity(hotelPicture);
-            pictureServiceImpl.savePicture(hotelPic);
+            PictureEntity hotelPic = pictureService.createPictureEntity(hotelPicture);
+            pictureService.savePicture(hotelPic);
             pictureEntities.add(hotelPic);
             hotel.setHotelPictures(pictureEntities);
         }
@@ -91,7 +94,7 @@ public class HotelServiceImpl implements HotelService {
                     .setPrice(BigDecimal.valueOf(199, 0))
                     .setRoomType(RoomTypeEnum.APARTMENT);
 
-            apartment = roomServiceImpl.saveRoom(apartment);
+            apartment = roomService.saveRoom(apartment);
 
             rooms.add(apartment);
             hotel.setRooms(rooms);
@@ -105,7 +108,7 @@ public class HotelServiceImpl implements HotelService {
                     .setPrice(BigDecimal.valueOf(99, 0))
                     .setRoomType(RoomTypeEnum.STUDIO);
 
-            studio = roomServiceImpl.saveRoom(studio);
+            studio = roomService.saveRoom(studio);
 
             rooms.add(studio);
             hotel.setRooms(rooms);
@@ -120,7 +123,7 @@ public class HotelServiceImpl implements HotelService {
                     .setPrice(BigDecimal.valueOf(129, 0))
                     .setRoomType(RoomTypeEnum.DOUBLE_ROOM);
 
-            doubleRoom = roomServiceImpl.saveRoom(doubleRoom);
+            doubleRoom = roomService.saveRoom(doubleRoom);
 
             rooms.add(doubleRoom);
             hotel.setRooms(rooms);

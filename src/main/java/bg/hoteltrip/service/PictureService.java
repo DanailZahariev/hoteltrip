@@ -1,4 +1,4 @@
-package bg.hoteltrip.service.impl;
+package bg.hoteltrip.service;
 
 import bg.hoteltrip.model.entity.PictureEntity;
 import org.springframework.web.multipart.MultipartFile;

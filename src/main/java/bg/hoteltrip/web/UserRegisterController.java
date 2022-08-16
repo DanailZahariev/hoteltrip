@@ -2,6 +2,7 @@ package bg.hoteltrip.web;
 
 import bg.hoteltrip.model.binding.UserRegisterBindingModel;
 import bg.hoteltrip.model.service.UserServiceModel;
+import bg.hoteltrip.service.UserService;
 import bg.hoteltrip.service.impl.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,12 @@ import java.io.IOException;
 @RequestMapping("/users")
 public class UserRegisterController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public UserRegisterController(UserServiceImpl userServiceImpl,
+    public UserRegisterController(UserService userService,
                                   ModelMapper modelMapper) {
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
@@ -39,7 +40,7 @@ public class UserRegisterController {
     @PostMapping("/register")
     public String registerUser(@Valid UserRegisterBindingModel userRegisterBindingModel,
                                BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes) throws RoleNotFoundException, IOException {
+                               RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userRegisterBindingModel", userRegisterBindingModel)
@@ -48,7 +49,7 @@ public class UserRegisterController {
         }
 
         UserServiceModel newUser = modelMapper.map(userRegisterBindingModel, UserServiceModel.class);
-        userServiceImpl.registerUser(newUser);
+        userService.registerUser(newUser);
 
         return "redirect:/";
     }

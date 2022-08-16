@@ -4,6 +4,7 @@ import bg.hoteltrip.model.binding.UserProfilePictureAddBindingModel;
 import bg.hoteltrip.model.binding.UserProfileUpdateBindingModel;
 import bg.hoteltrip.model.service.UserServiceModel;
 import bg.hoteltrip.model.view.UserProfileViewModel;
+import bg.hoteltrip.service.UserService;
 import bg.hoteltrip.service.impl.UserServiceImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -18,16 +19,16 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 
-@RequestMapping("/users")
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public UserController(UserServiceImpl userServiceImpl,
+    public UserController(UserService userService,
                           ModelMapper modelMapper) {
-        this.userServiceImpl = userServiceImpl;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
@@ -47,11 +48,11 @@ public class UserController {
         return "redirect:login";
     }
 
-    @GetMapping("/profile/")
+    @GetMapping("/profile")
     public String getUserProfile(Principal principal,
                                  Model model) {
 
-        UserProfileViewModel userProfile = userServiceImpl.getUserProfile(principal.getName());
+        UserProfileViewModel userProfile = userService.getUserProfile(principal.getName());
 
         model.addAttribute("user", userProfile);
 
@@ -62,21 +63,21 @@ public class UserController {
     @GetMapping("/profile/edit")
     public String userProfileUpdate(Principal principal,
                                     Model model) {
-        UserProfileViewModel userProfile = userServiceImpl.getUserProfile(principal.getName());
+        UserProfileViewModel userProfile = userService.getUserProfile(principal.getName());
 
         model.addAttribute("user", userProfile);
 
         return "user-update";
     }
 
-    @PostMapping("/profile/edit/")
+    @PostMapping("/profile/edit")
     public String userProfileEdit(@Valid UserProfileUpdateBindingModel userProfileUpdateBindingModel,
                                   BindingResult bindingResult,
                                   RedirectAttributes redirectAttributes,
                                   Principal principal) {
 
 
-        UserServiceModel user = userServiceImpl.findUser(principal.getName());
+        UserServiceModel user = userService.findUser(principal.getName());
 
 
         if (bindingResult.hasErrors()) {
@@ -87,7 +88,7 @@ public class UserController {
             return "redirect:/users/profile/edit";
         }
 
-        userServiceImpl.updateUserProfile(modelMapper.map(userProfileUpdateBindingModel, UserServiceModel.class) ,user.getEmail());
+        userService.updateUserProfile(modelMapper.map(userProfileUpdateBindingModel, UserServiceModel.class), user.getEmail());
 
         return "redirect:/users/profile/";
     }
@@ -104,7 +105,7 @@ public class UserController {
             return "redirect:";
         }
 
-        userServiceImpl.addNewProfilePicture(principal.getName(), userProfilePictureAddBindingModel);
+        userService.addNewProfilePicture(principal.getName(), userProfilePictureAddBindingModel);
 
         return "redirect:/users/profile/";
     }
@@ -113,7 +114,7 @@ public class UserController {
     @GetMapping("/profile/edit/picture/delete")
     public String deleteProfilePicture(Principal principal) {
 
-        userServiceImpl.deleteProfilePicture(principal.getName());
+        userService.deleteProfilePicture(principal.getName());
 
         return "redirect:/users/profile/";
     }

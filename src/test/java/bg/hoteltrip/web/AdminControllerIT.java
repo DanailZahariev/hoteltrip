@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AdminControllerMockBeanIT {
+public class AdminControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -25,5 +25,35 @@ public class AdminControllerMockBeanIT {
                 andExpect(status().isOk()).
                 andExpect(view()
                         .name("admin"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testAdminShouldFindAllUsers() throws Exception {
+        mockMvc.perform(get("/admin/all-users"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("all-users"));
+    }
+
+    @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
+    void testAdminShouldOpenAddHotelPage() throws Exception {
+        mockMvc.perform(get("/admin/add-hotel"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("add-hotel"));
+    }
+
+    @Test
+    @WithMockUser
+    void testUserShouldNotHaveAccessToAllUserPage() throws Exception {
+        mockMvc.perform(get("/admin/all-users"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser
+    void testUserShouldNotHaveAccessToAddHotelPage() throws Exception {
+        mockMvc.perform(get("/admin/add-hotel"))
+                .andExpect(status().isForbidden());
     }
 }

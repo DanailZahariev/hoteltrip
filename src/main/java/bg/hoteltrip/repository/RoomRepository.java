@@ -3,6 +3,7 @@ package bg.hoteltrip.repository;
 import bg.hoteltrip.model.entity.HotelEntity;
 import bg.hoteltrip.model.entity.RoomEntity;
 import bg.hoteltrip.model.entity.enums.RoomTypeEnum;
+import bg.hoteltrip.model.view.HotelRoomViewModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
